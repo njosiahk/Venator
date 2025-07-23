@@ -105,7 +105,7 @@ namespace TarodevController
         }
         
         #region Squish
-
+        
         [Header("Squish")] [SerializeField] private ParticleSystem.MinMaxCurve _squishMinMaxX;
         [SerializeField] private ParticleSystem.MinMaxCurve _squishMinMaxY;
         [SerializeField] private float _minSquishForce = 6f;
@@ -146,7 +146,7 @@ namespace TarodevController
             _isSquishing = false;
             if (_squishRoutine != null) StopCoroutine(_squishRoutine);
         }
-
+        
         #endregion
 
         #region Walls & Ladders
@@ -307,11 +307,13 @@ namespace TarodevController
                 _crouching = false;
             }
 
+            
             if (!_isSquishing)
             {
                 var percentage = _character.CrouchingHeight / _character.Height;
                 _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, _crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
             }
+            
         }
 
         #endregion

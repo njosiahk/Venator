@@ -1,58 +1,40 @@
 fileFormatVersion: 2
-guid: 6b52b61eb9dd9914a9068ac5e142a30f
+guid: 7aca64708370d714ab7b775150ba10c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2237285443321258136
-    second: Player Idle 48x48_0
+      213: -1371029052870881117
+    second: player new jump 48x48_0
   - first:
-      213: -5002554111202923218
-    second: Player Idle 48x48_1
+      213: -2315129620777849004
+    second: player new jump 48x48_1
   - first:
-      213: -2020844409934685739
-    second: Player Idle 48x48_2
+      213: 3525680688647848675
+    second: player new jump 48x48_2
   - first:
-      213: -9185694857040485984
-    second: Player Idle 48x48_3
+      213: -6961841436348922279
+    second: player new jump 48x48_3
   - first:
-      213: 1395467955858695640
-    second: Player Idle 48x48_4
+      213: -8838444428936912337
+    second: player new jump 48x48_4
   - first:
-      213: 4383063090576569991
-    second: Player Idle 48x48_5
+      213: 5615097069923012861
+    second: player new jump 48x48_5
   - first:
-      213: 6818239589509320238
-    second: Player Idle 48x48_6
+      213: -2335703473165064500
+    second: player new jump 48x48_6
   - first:
-      213: -7087506356234902099
-    second: Player Idle 48x48_7
+      213: 9167086494364418317
+    second: player new jump 48x48_7
   - first:
-      213: -8860274237790193237
-    second: Player Idle 48x48_8
+      213: -1654628250928881350
+    second: player new jump 48x48_8
   - first:
-      213: -1427668651449712053
-    second: Player Idle 48x48_9
+      213: -4118337328299782798
+    second: player new jump 48x48_9
   - first:
-      213: 6065544960069181971
-    second: Player Idle 48x48_10
-  - first:
-      213: -2151354002033325826
-    second: Player Idle 48x48_11
-  - first:
-      213: -8111184701435642853
-    second: Player Idle 48x48_12
-  - first:
-      213: -21784638905573931
-    second: Player Idle 48x48_13
-  - first:
-      213: -3977457104276581132
-    second: Player Idle 48x48_14
-  - first:
-      213: -5116091881767546197
-    second: Player Idle 48x48_15
-  - first:
-      213: 4646468844417410410
-    second: Player Idle 48x48_16
+      213: 4330072777175347421
+    second: player new jump 48x48_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -187,7 +169,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Idle 48x48_0
+      name: player new jump 48x48_0
       rect:
         serializedVersion: 2
         x: 0
@@ -202,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 890e05ec14f6c0f10800000000000000
-      internalID: 2237285443321258136
+      spriteID: 3a014e6275029fce0800000000000000
+      internalID: -1371029052870881117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_1
+      name: player new jump 48x48_1
       rect:
         serializedVersion: 2
         x: 48
@@ -224,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e2d64106a8b539ab0800000000000000
-      internalID: -5002554111202923218
+      spriteID: 45f2d8040e10fdfd0800000000000000
+      internalID: -2315129620777849004
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_2
+      name: player new jump 48x48_2
       rect:
         serializedVersion: 2
         x: 96
@@ -246,14 +228,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5d9528f47b484f3e0800000000000000
-      internalID: -2020844409934685739
+      spriteID: 3e24f4e08ebbde030800000000000000
+      internalID: 3525680688647848675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_3
+      name: player new jump 48x48_3
       rect:
         serializedVersion: 2
         x: 144
@@ -268,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a128f6023bd58080800000000000000
-      internalID: -9185694857040485984
+      spriteID: 956c3db5912926f90800000000000000
+      internalID: -6961841436348922279
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_4
+      name: player new jump 48x48_4
       rect:
         serializedVersion: 2
         x: 192
@@ -290,14 +272,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8d5e56c56b2bd5310800000000000000
-      internalID: 1395467955858695640
+      spriteID: f226f26be99875580800000000000000
+      internalID: -8838444428936912337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_5
+      name: player new jump 48x48_5
       rect:
         serializedVersion: 2
         x: 240
@@ -312,96 +294,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78631fd88a4c3dc30800000000000000
-      internalID: 4383063090576569991
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Idle 48x48_6
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e2e453638c04f9e50800000000000000
-      internalID: 6818239589509320238
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Idle 48x48_7
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: da5ab4d258e14ad90800000000000000
-      internalID: -7087506356234902099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Idle 48x48_8
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ba978f3468bf90580800000000000000
-      internalID: -8860274237790193237
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Idle 48x48_9
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b420165fce6ef2ce0800000000000000
-      internalID: -1427668651449712053
+      spriteID: df01918f805dced40800000000000000
+      internalID: 5615097069923012861
       vertices: []
       indices: 
       edges: []
@@ -410,7 +304,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d11bf8bcc7002064b8264d47edaf3918
+    spriteID: f47b7e97c82cf9441aff024b98d11a27
     internalID: 0
     vertices: []
     indices: 
@@ -418,18 +312,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Player Idle 48x48_0: 2237285443321258136
-      Player Idle 48x48_1: -5002554111202923218
-      Player Idle 48x48_2: -2020844409934685739
-      Player Idle 48x48_3: -9185694857040485984
-      Player Idle 48x48_4: 1395467955858695640
-      Player Idle 48x48_5: 4383063090576569991
-      Player Idle 48x48_6: 6818239589509320238
-      Player Idle 48x48_7: -7087506356234902099
-      Player Idle 48x48_8: -8860274237790193237
-      Player Idle 48x48_9: -1427668651449712053
+      player new jump 48x48_0: -1371029052870881117
+      player new jump 48x48_1: -2315129620777849004
+      player new jump 48x48_2: 3525680688647848675
+      player new jump 48x48_3: -6961841436348922279
+      player new jump 48x48_4: -8838444428936912337
+      player new jump 48x48_5: 5615097069923012861
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

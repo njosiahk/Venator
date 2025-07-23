@@ -1,58 +1,37 @@
 fileFormatVersion: 2
-guid: 6b52b61eb9dd9914a9068ac5e142a30f
+guid: a2ba4b95d06e91947b1570ffdc4e4e9e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2237285443321258136
-    second: Player Idle 48x48_0
+      213: 6928504691474790592
+    second: katana walk_0
   - first:
-      213: -5002554111202923218
-    second: Player Idle 48x48_1
+      213: -946816134368951277
+    second: katana walk_1
   - first:
-      213: -2020844409934685739
-    second: Player Idle 48x48_2
+      213: 4298192426751946095
+    second: katana walk_2
   - first:
-      213: -9185694857040485984
-    second: Player Idle 48x48_3
+      213: 5968525987270713720
+    second: katana walk_3
   - first:
-      213: 1395467955858695640
-    second: Player Idle 48x48_4
+      213: -5319514794943757400
+    second: katana walk_4
   - first:
-      213: 4383063090576569991
-    second: Player Idle 48x48_5
+      213: 2490470788356092557
+    second: katana walk_5
   - first:
-      213: 6818239589509320238
-    second: Player Idle 48x48_6
+      213: 1219606821792420367
+    second: katana walk_6
   - first:
-      213: -7087506356234902099
-    second: Player Idle 48x48_7
+      213: 3912009418308785415
+    second: katana walk_7
   - first:
-      213: -8860274237790193237
-    second: Player Idle 48x48_8
+      213: 2189458735540167989
+    second: katana walk_8
   - first:
-      213: -1427668651449712053
-    second: Player Idle 48x48_9
-  - first:
-      213: 6065544960069181971
-    second: Player Idle 48x48_10
-  - first:
-      213: -2151354002033325826
-    second: Player Idle 48x48_11
-  - first:
-      213: -8111184701435642853
-    second: Player Idle 48x48_12
-  - first:
-      213: -21784638905573931
-    second: Player Idle 48x48_13
-  - first:
-      213: -3977457104276581132
-    second: Player Idle 48x48_14
-  - first:
-      213: -5116091881767546197
-    second: Player Idle 48x48_15
-  - first:
-      213: 4646468844417410410
-    second: Player Idle 48x48_16
+      213: -714900130078326592
+    second: katana walk_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -187,7 +166,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Idle 48x48_0
+      name: Player Katana Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -200,16 +179,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 890e05ec14f6c0f10800000000000000
-      internalID: 2237285443321258136
+      spriteID: bfbd682abf5bcf9459ae14f9d54673ed
+      internalID: -184672208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_1
+      name: Player Katana Walk_1
       rect:
         serializedVersion: 2
         x: 48
@@ -222,16 +201,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e2d64106a8b539ab0800000000000000
-      internalID: -5002554111202923218
+      spriteID: 69036879699146448af5fdcf87d651fe
+      internalID: -1151362376
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_2
+      name: Player Katana Walk_2
       rect:
         serializedVersion: 2
         x: 96
@@ -244,16 +223,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5d9528f47b484f3e0800000000000000
-      internalID: -2020844409934685739
+      spriteID: de61741e81b2c0146a779bb5e7c8fc8c
+      internalID: 1497739201
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_3
+      name: Player Katana Walk_3
       rect:
         serializedVersion: 2
         x: 144
@@ -266,16 +245,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0a128f6023bd58080800000000000000
-      internalID: -9185694857040485984
+      spriteID: 93375f096c5d4ee4095079666ecda297
+      internalID: 1981016333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_4
+      name: Player Katana Walk_4
       rect:
         serializedVersion: 2
         x: 192
@@ -288,16 +267,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8d5e56c56b2bd5310800000000000000
-      internalID: 1395467955858695640
+      spriteID: 32240468e1d4ac8489391a9a152c4f84
+      internalID: 251216168
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_5
+      name: Player Katana Walk_5
       rect:
         serializedVersion: 2
         x: 240
@@ -310,16 +289,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 78631fd88a4c3dc30800000000000000
-      internalID: 4383063090576569991
+      spriteID: 12fb6b746339be64b832af616ef14857
+      internalID: 1504704674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_6
+      name: Player Katana Walk_6
       rect:
         serializedVersion: 2
         x: 288
@@ -332,16 +311,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e2e453638c04f9e50800000000000000
-      internalID: 6818239589509320238
+      spriteID: c99dd8a9b5e066f459a09bc6c7f28ca3
+      internalID: 337041850
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_7
+      name: Player Katana Walk_7
       rect:
         serializedVersion: 2
         x: 336
@@ -354,16 +333,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: da5ab4d258e14ad90800000000000000
-      internalID: -7087506356234902099
+      spriteID: 666066df2b981fa4e99502574e8864c3
+      internalID: 26015534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_8
+      name: Player Katana Walk_8
       rect:
         serializedVersion: 2
         x: 384
@@ -376,16 +355,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ba978f3468bf90580800000000000000
-      internalID: -8860274237790193237
+      spriteID: 0a8c12b0cb81b4440a7c9a658497fca9
+      internalID: 885150356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Idle 48x48_9
+      name: Player Katana Walk_9
       rect:
         serializedVersion: 2
         x: 432
@@ -398,10 +377,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b420165fce6ef2ce0800000000000000
-      internalID: -1427668651449712053
+      spriteID: 448083c11a9c17c408102a5d0f146c0c
+      internalID: -820303123
       vertices: []
       indices: 
       edges: []
@@ -410,7 +389,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d11bf8bcc7002064b8264d47edaf3918
+    spriteID: 8aa0e2047dfe09d4699eda78df2092ab
     internalID: 0
     vertices: []
     indices: 
@@ -418,18 +397,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceOnImport
+        value: True
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Player Idle 48x48_0: 2237285443321258136
-      Player Idle 48x48_1: -5002554111202923218
-      Player Idle 48x48_2: -2020844409934685739
-      Player Idle 48x48_3: -9185694857040485984
-      Player Idle 48x48_4: 1395467955858695640
-      Player Idle 48x48_5: 4383063090576569991
-      Player Idle 48x48_6: 6818239589509320238
-      Player Idle 48x48_7: -7087506356234902099
-      Player Idle 48x48_8: -8860274237790193237
-      Player Idle 48x48_9: -1427668651449712053
+      Player Katana Walk_0: -184672208
+      Player Katana Walk_1: -1151362376
+      Player Katana Walk_2: 1497739201
+      Player Katana Walk_3: 1981016333
+      Player Katana Walk_4: 251216168
+      Player Katana Walk_5: 1504704674
+      Player Katana Walk_6: 337041850
+      Player Katana Walk_7: 26015534
+      Player Katana Walk_8: 885150356
+      Player Katana Walk_9: -820303123
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
