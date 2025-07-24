@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace TarodevController
         private GeneratedCharacterSize _character;
         private Vector3 _trailOffset;
         private Vector2 _trailVel;
+        private float _currentMoveX;
 
         private void Awake()
         {
@@ -89,6 +91,10 @@ namespace TarodevController
             SetParticleColor(-_player.Up, _moveParticles);
 
             HandleSpriteFlip(xInput);
+
+            HandleRunningAndWalking();
+
+            HandleJumpingAndLanding();
 
             //HandleIdleSpeed(xInput);
 
@@ -289,6 +295,59 @@ namespace TarodevController
         #endregion
         */
 
+        #region Running & Walking
+        /*
+        private void HandleRunningAndWalking(float xInput) //directly input reading
+        {
+            float moveX = Mathf.Abs(xInput);
+            _anim.SetFloat(MoveXKey, moveX);
+        }
+        */
+
+        /*
+        private void HandleRunningAndWalking() //using player velocity
+        {
+            float targetMoveX = Mathf.Abs(_player.Velocity.x); //Get the absolute value of the horizontal velocity
+            _currentMoveX = Mathf.Lerp(_currentMoveX, targetMoveX, Time.deltaTime * 80f); // Smoothly interpolate towards the target value over time
+
+            if (_currentMoveX <0.05f) _currentMoveX = 0; //Snap the value to zero if it's very small
+
+            _anim.SetFloat(MoveXKey, _currentMoveX); 
+        }
+        */
+
+        private void HandleRunningAndWalking() //using player input and velocity
+        {
+            // Get the player's current velocity and input
+            float rawVelocity = Mathf.Abs(_player.Velocity.x);
+            float rawInput = Mathf.Abs(_player.Input.x);
+
+            // If input is pressed but velocity is almost zero, assume the player is stuck (e.g., against a wall)
+            float targetMoveX = (rawInput > 0.1f && rawVelocity < 0.05f) ? 0f : rawVelocity;
+
+            // Smooth the animation speed
+            _currentMoveX = Mathf.Lerp(_currentMoveX, targetMoveX, Time.deltaTime * 80f);
+
+            // Snap to 0 if very small
+            if (_currentMoveX < 0.1f) _currentMoveX = 0f;
+
+            // Update Animator parameter
+            _anim.SetFloat(MoveXKey, _currentMoveX);
+        }
+
+        #endregion
+
+        #region Jumping & Landing
+
+        private void HandleJumpingAndLanding()
+        {
+
+            _anim.SetFloat("VerticalSpeed", _player.Velocity.y);
+
+        }
+
+        #endregion
+
         #region Crouch & Slide
 
         private bool _crouching;
@@ -352,6 +411,7 @@ namespace TarodevController
 
             if (grounded)
             {
+                _anim.ResetTrigger(JumpKey);
                 _anim.SetBool(GroundedKey, true);
                 CancelSquish();
                 _squishRoutine = StartCoroutine(SquishPlayer(Mathf.Abs(impact)));
@@ -443,8 +503,9 @@ namespace TarodevController
 
         #region Animation Keys
 
+        private static readonly int MoveXKey = Animator.StringToHash("MoveX");
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
-        private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
+        //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         private static readonly int JumpKey = Animator.StringToHash("Jump");
 
         #endregion
