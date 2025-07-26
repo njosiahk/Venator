@@ -19724,11 +19724,11 @@ MonoBehaviour:
   _moveParticles: {fileID: 3054942119837435221}
   _landParticles: {fileID: 3054942121100908041}
   _doubleJumpParticles: {fileID: 3054942119778330331}
-  _dashParticles: {fileID: 3054942120786680124}
-  _dashRingParticles: {fileID: 3054942120025842297}
-  _dashRingTransform: {fileID: 3054942120045712701}
+  _rollParticles: {fileID: 0}
+  _rollRingParticles: {fileID: 0}
+  _rollRingTransform: {fileID: 0}
   _doubleJumpClip: {fileID: 8300000, guid: 0d11fd7368b306b4c900241e3dadf28f, type: 3}
-  _dashClip: {fileID: 8300000, guid: 6d2d16f85c087ea419d323141cd2145c, type: 3}
+  _rollClip: {fileID: 0}
   _jumpClips:
   - {fileID: 8300000, guid: 3400b2f34e04a3e4d85922008ffe6471, type: 3}
   - {fileID: 8300000, guid: 4451a35363e4a4442a4bf908b82fbb60, type: 3}

@@ -37,12 +37,20 @@ namespace TarodevController
         public float EndJumpEarlyExtraForceMultiplier = 3;
         public int MaxAirJumps = 1;
 
-        // Dash
+        //Roll
+        [Header("Roll"), Space] public bool AllowRoll = true;
+        public float RollVelocity = 50;
+        public float RollDuration = 0.2f;
+        public float RollCooldown = 1.5f;
+        public float RollEndHorizontalMultiplier = 0.5f;
+
+        // Dash (Weapon)
+        /*
         [Header("Dash"), Space] public bool AllowDash = true;
         public float DashVelocity = 50;
         public float DashDuration = 0.2f;
         public float DashCooldown = 1.5f;
-        public float DashEndHorizontalMultiplier = 0.5f;
+        public float DashEndHorizontalMultiplier = 0.5f;*/
 
         // Dash
         [Header("Crouch"), Space] public bool AllowCrouching;

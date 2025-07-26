@@ -39,11 +39,11 @@ MonoBehaviour:
   JumpPower: 14
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
-  AllowDash: 1
-  DashVelocity: 40
-  DashDuration: 0.05
-  DashCooldown: 1
-  DashEndHorizontalMultiplier: 0.5
+  AllowRoll: 1
+  RollVelocity: 30
+  RollDuration: 0.1
+  RollCooldown: 1
+  RollEndHorizontalMultiplier: 3
   AllowCrouching: 0
   CrouchSlowDownTime: 1
   CrouchSpeedModifier: 0.3
@@ -53,10 +53,10 @@ MonoBehaviour:
     m_Bits: 256
   WallJumpTotalInputLossTime: 0.2
   WallJumpInputLossReturnTime: 0.5
-  RequireInputPush: 1
+  RequireInputPush: 0
   WallJumpPower: {x: 10, y: 18}
   WallPushPower: {x: 10, y: 18}
-  WallClimbSpeed: 5
+  WallClimbSpeed: -2.5
   WallFallAcceleration: 5
   WallPopForce: 10
   WallCoyoteTime: 0.3

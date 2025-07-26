@@ -23,7 +23,8 @@ namespace TarodevController
         public ControllerState State { get; private set; }
         public event Action<JumpType> Jumped;
         public event Action<bool, float> GroundedChanged;
-        public event Action<bool, Vector2> DashChanged;
+        public event Action<bool, Vector2> RollChanged;
+        //public event Action<bool, Vector2> DashChanged;
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
@@ -114,7 +115,8 @@ namespace TarodevController
             CalculateWalls();
             CalculateLadders();
             CalculateJump();
-            CalculateDash();
+            CalculateRoll();
+            //CalculateDash();
 
             CalculateExternalModifiers();
 
@@ -182,10 +184,16 @@ namespace TarodevController
                 _timeJumpWasPressed = _time;
             }
 
+            if (_frameInput.RollDown)
+            {
+                _rollToConsume = true;
+            }
+            /*
             if (_frameInput.DashDown)
             {
                 _dashToConsume = true;
             }
+            */
         }
 
         #endregion
@@ -237,7 +245,8 @@ namespace TarodevController
         private void CleanFrameData()
         {
             _jumpToConsume = false;
-            _dashToConsume = false;
+            _rollToConsume = false;
+            //_dashToConsume = false;
             _forceToApplyThisFrame = Vector2.zero;
             _lastFrameY = Velocity.y;
         }
@@ -311,7 +320,8 @@ namespace TarodevController
                 SetVelocity(_trimmedFrameVelocity);
                 _constantForce.force = Vector2.zero;
                 _currentStepDownLength = _character.StepHeight;
-                _canDash = true;
+                _canRoll = true;
+                //_canDash = true;
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 ResetAirJumps();
@@ -584,8 +594,49 @@ namespace TarodevController
 
         #endregion
 
-        #region Dash
+        #region Roll
 
+        private bool _rollToConsume;
+        private bool _canRoll;
+        private Vector2 _rollVel;
+        private bool _rolling;
+        private float _startedRolling;
+        private float _nextRollTime;
+
+        private void CalculateRoll()
+        {
+            if (!Stats.AllowRoll) return;
+
+            if (_rollToConsume && _canRoll && !Crouching && _time > _nextRollTime)
+            {
+                var dir = new Vector2(_frameInput.Move.x, Mathf.Max(_frameInput.Move.y, 0f)).normalized;
+                if (dir == Vector2.zero) return;
+
+                _rollVel = dir * Stats.RollVelocity;
+                _rolling = true;
+                _canRoll = false;
+                _startedRolling = _time;
+                _nextRollTime = _time + Stats.RollCooldown;
+                RollChanged?.Invoke(true, dir);
+            }
+
+            if (_rolling)
+            {
+                if (_time > _startedRolling + Stats.RollDuration)
+                {
+                    _rolling = false;
+                    RollChanged?.Invoke(false, Vector2.zero);
+
+                    SetVelocity(new Vector2(Velocity.x * Stats.RollEndHorizontalMultiplier, Velocity.y));
+                    if (_grounded) _canRoll = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Dash
+        /*
         private bool _dashToConsume;
         private bool _canDash;
         private Vector2 _dashVel;
@@ -622,7 +673,7 @@ namespace TarodevController
                 }
             }
         }
-
+        */
         #endregion
 
         #region Crouching
@@ -745,9 +796,9 @@ namespace TarodevController
                 return;
             }
 
-            if (_dashing)
+            if (_rolling)
             {
-                SetVelocity(_dashVel);
+                SetVelocity(_rollVel);
                 return;
             }
 
@@ -955,7 +1006,8 @@ namespace TarodevController
         public ControllerState State { get; }
         public event Action<JumpType> Jumped;
         public event Action<bool, float> GroundedChanged;
-        public event Action<bool, Vector2> DashChanged;
+        public event Action<bool, Vector2> RollChanged;
+        //public event Action<bool, Vector2> DashChanged;
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;

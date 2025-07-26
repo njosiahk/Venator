@@ -22,16 +22,20 @@ namespace TarodevController
         [SerializeField] private ParticleSystem _moveParticles;
         [SerializeField] private ParticleSystem _landParticles;
         [SerializeField] private ParticleSystem _doubleJumpParticles;
-        [SerializeField] private ParticleSystem _dashParticles;
-        [SerializeField] private ParticleSystem _dashRingParticles;
-        [SerializeField] private Transform _dashRingTransform;
+        [SerializeField] private ParticleSystem _rollParticles;
+        //[SerializeField] private ParticleSystem _dashParticles;
+        [SerializeField] private ParticleSystem _rollRingParticles;
+        //[SerializeField] private ParticleSystem _dashRingParticles;
+        [SerializeField] private Transform _rollRingTransform;
+        //[SerializeField] private Transform _dashRingTransform;
         
 
         
         [Header("Audio Clips")] [SerializeField]
         private AudioClip _doubleJumpClip;
 
-        [SerializeField] private AudioClip _dashClip;
+        [SerializeField] private AudioClip _rollClip;
+        //[SerializeField] private AudioClip _dashClip;
         [SerializeField] private AudioClip[] _jumpClips;
         [SerializeField] private AudioClip[] _splats;
         [SerializeField] private AudioClip[] _slideClips;
@@ -62,7 +66,8 @@ namespace TarodevController
         {
             _player.Jumped += OnJumped;
             _player.GroundedChanged += OnGroundedChanged;
-            _player.DashChanged += OnDashChanged;
+            _player.RollChanged += OnRollChanged;
+            //_player.DashChanged += OnDashChanged;
             _player.WallGrabChanged += OnWallGrabChanged;
             _player.Repositioned += PlayerOnRepositioned;
             _player.ToggledPlayer += PlayerOnToggledPlayer;
@@ -74,7 +79,8 @@ namespace TarodevController
         {
             _player.Jumped -= OnJumped;
             _player.GroundedChanged -= OnGroundedChanged;
-            _player.DashChanged -= OnDashChanged;
+            _player.RollChanged -= OnRollChanged;
+            //_player.DashChanged -= OnDashChanged;
             _player.WallGrabChanged -= OnWallGrabChanged;
             _player.Repositioned -= PlayerOnRepositioned;
             _player.ToggledPlayer -= PlayerOnToggledPlayer;
@@ -383,7 +389,6 @@ namespace TarodevController
         {
             if (type is JumpType.Jump or JumpType.Coyote or JumpType.WallJump)
             {
-                _anim.SetTrigger(JumpKey);
                 _anim.ResetTrigger(GroundedKey);
                 PlayRandomSound(_jumpClips, 0.2f, Random.Range(0.98f, 1.02f));
 
@@ -411,7 +416,6 @@ namespace TarodevController
 
             if (grounded)
             {
-                _anim.ResetTrigger(JumpKey);
                 _anim.SetBool(GroundedKey, true);
                 CancelSquish();
                 _squishRoutine = StartCoroutine(SquishPlayer(Mathf.Abs(impact)));
@@ -428,6 +432,21 @@ namespace TarodevController
                 _moveParticles.Stop();
             }
         }
+        private void OnRollChanged(bool rolling, Vector2 dir)
+        {
+            if (rolling)
+            {
+                _rollParticles.Play();
+                _rollRingTransform.up = dir;
+                _rollRingParticles.Play();
+                _source.PlayOneShot(_rollClip,0.5f);
+            }
+            else
+            {
+                _rollParticles.Stop();
+            }
+        }
+        /*
         private void OnDashChanged(bool dashing, Vector2 dir)
         {
             if (dashing)
@@ -442,7 +461,7 @@ namespace TarodevController
                 _dashParticles.Stop();
             }
         }
-        
+        */
         #endregion
 
         private float _originalTrailTime;
@@ -506,7 +525,7 @@ namespace TarodevController
         private static readonly int MoveXKey = Animator.StringToHash("MoveX");
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
-        private static readonly int JumpKey = Animator.StringToHash("Jump");
+        //private static readonly int JumpKey = Animator.StringToHash("Jump");
 
         #endregion
     }
