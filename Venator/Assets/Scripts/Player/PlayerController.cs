@@ -528,6 +528,8 @@ namespace TarodevController
         private bool _coyoteUsable;
         private float _timeLeftGrounded;
         private float _returnWallInputLossAfter;
+        private int _lastWallDirection;
+        public int LastWallDirection => _lastWallDirection; 
 
         private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + Stats.BufferedJumpTime && !IsWithinJumpClearance;
         private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _timeLeftGrounded + Stats.CoyoteTime;
@@ -577,6 +579,11 @@ namespace TarodevController
                 _wallJumpInputNerfPoint = 0;
                 _returnWallInputLossAfter = _time + Stats.WallJumpTotalInputLossTime;
                 _wallDirectionForJump = _wallDirThisFrame;
+                if (_wallDirThisFrame != 0)
+                    WallDirection = _wallDirThisFrame;
+
+                _lastWallDirection = _wallDirThisFrame;
+
                 if (_isOnWall || IsPushingAgainstWall)
                 {
                     AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallJumpPower);
@@ -1019,6 +1026,7 @@ namespace TarodevController
         public Vector2 GroundNormal { get; }
         public Vector2 Velocity { get; }
         public int WallDirection { get; }
+        public int LastWallDirection { get; }
         public bool ClimbingLadder { get; }
 
         // External force

@@ -94,6 +94,11 @@ namespace TarodevController
 
             var xInput = _player.Input.x;
 
+            if (_flipLockoutTimer > 0f)
+            {
+                _flipLockoutTimer -= Time.deltaTime;
+            }
+
             SetParticleColor(-_player.Up, _moveParticles);
 
             HandleSpriteFlip(xInput);
@@ -185,7 +190,10 @@ namespace TarodevController
         private void OnWallGrabChanged(bool onWall)
         {
             _isOnWall = onWall;
-            if(_isOnWall) PlaySound(_wallGrabClip, 0.5f);
+            if (_isOnWall)
+            {
+                PlaySound(_wallGrabClip, 0.5f);
+            }
         }
         
         private void HandleWallSlideEffects()
@@ -267,7 +275,8 @@ namespace TarodevController
         */
         private void HandleSpriteFlip(float xInput)
         {
-            if (_player.Input.x != 0) _sprite.flipX = xInput < 0;
+            if (_flipLockoutTimer > 0f) return; //no flipping during lockout
+            if (xInput != 0) _sprite.flipX = xInput < 0;
         }
 
         #endregion
@@ -385,12 +394,22 @@ namespace TarodevController
 
         #region Event Callbacks
 
+        private float _flipLockoutTimer = 0f;
+        [SerializeField] private float _flipLockoutDuration = 0.1f;
+
         private void OnJumped(JumpType type)
         {
             if (type is JumpType.Jump or JumpType.Coyote or JumpType.WallJump)
             {
                 _anim.ResetTrigger(GroundedKey);
                 PlayRandomSound(_jumpClips, 0.2f, Random.Range(0.98f, 1.02f));
+
+                //Flip sprite on wall jump
+                if (type == JumpType.WallJump)
+                {
+                    _flipLockoutTimer = _flipLockoutDuration;
+                    _sprite.flipX = _player.LastWallDirection > 0;
+                }
 
                 // Only play particles when grounded (avoid coyote)
                 if (type is JumpType.Jump)
