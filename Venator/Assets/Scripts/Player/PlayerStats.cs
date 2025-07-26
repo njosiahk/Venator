@@ -29,6 +29,9 @@ namespace TarodevController
         public float DirectionCorrectionMultiplier = 3f;
         public float MaxWalkableSlope = 50;
 
+        [Header("Sprinting")]
+        public float SprintSpeedMultiplier = 1.5f;
+
         // Jump
         [Header("Jump"), Space] public float ExtraConstantGravity = 40;
         public float BufferedJumpTime = 0.15f;

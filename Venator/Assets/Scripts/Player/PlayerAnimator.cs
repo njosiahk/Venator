@@ -348,6 +348,7 @@ namespace TarodevController
 
             // Update Animator parameter
             _anim.SetFloat(MoveXKey, _currentMoveX);
+            _anim.SetBool(SprintKey, _player.IsSprinting);
         }
 
         #endregion
@@ -356,9 +357,8 @@ namespace TarodevController
 
         private void HandleJumpingAndLanding()
         {
-
-            _anim.SetFloat("VerticalSpeed", _player.Velocity.y);
-
+            float verticalSpeed = Mathf.Abs(_player.Velocity.y) < 0.01f ? 0f : _player.Velocity.y;
+            _anim.SetFloat("VerticalSpeed", verticalSpeed);
         }
 
         #endregion
@@ -543,6 +543,7 @@ namespace TarodevController
 
         private static readonly int MoveXKey = Animator.StringToHash("MoveX");
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
+        private static readonly int SprintKey = Animator.StringToHash("Sprinting");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 

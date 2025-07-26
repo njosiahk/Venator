@@ -790,6 +790,7 @@ namespace TarodevController
             if (platformVel.y < 0) platformVel.y *= Stats.NegativeYVelocityNegation;
             _decayingTransientVelocity += platformVel;
         }
+        public bool IsSprinting => _frameInput.SprintHeld && _hasInputThisFrame && !_isOnWall && !ClimbingLadder && !_rolling && !Crouching;
 
         private void Move()
         {
@@ -852,6 +853,14 @@ namespace TarodevController
             _constantForce.force = extraForce * _rb.mass;
 
             var targetSpeed = _hasInputThisFrame ? Stats.BaseSpeed : 0;
+
+            // Check if sprint conditions are met
+            bool isSprinting = _frameInput.SprintHeld && _hasInputThisFrame && !_isOnWall && !ClimbingLadder && !_rolling && !Crouching;
+
+            if (isSprinting)
+            {
+                targetSpeed *= Stats.SprintSpeedMultiplier;
+            }
 
             if (Crouching)
             {
@@ -1028,6 +1037,7 @@ namespace TarodevController
         public int WallDirection { get; }
         public int LastWallDirection { get; }
         public bool ClimbingLadder { get; }
+        public bool IsSprinting { get; }
 
         // External force
         public void AddFrameForce(Vector2 force, bool resetVelocity = false);
