@@ -22,17 +22,18 @@ MonoBehaviour:
     Height: 1.1
     Width: 0.6
     StepHeight: 0.2
-    CrouchHeight: 0.4
+    CrouchHeight: 0.8
     RayInset: 0.01
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
   PositionCorrectionMode: 0
-  BaseSpeed: 10
+  BaseSpeed: 6
   Acceleration: 100
   Friction: 90
   AirFrictionMultiplier: 0.35
   DirectionCorrectionMultiplier: 3
   MaxWalkableSlope: 46
+  SprintSpeedMultiplier: 1.75
   ExtraConstantGravity: 40
   BufferedJumpTime: 0.15
   CoyoteTime: 0.05
@@ -40,12 +41,12 @@ MonoBehaviour:
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
   AllowRoll: 1
-  RollVelocity: 30
+  RollVelocity: 20
   RollDuration: 0.1
   RollCooldown: 1
-  RollEndHorizontalMultiplier: 3
-  AllowCrouching: 0
-  CrouchSlowDownTime: 1
+  RollEndHorizontalMultiplier: 0.8
+  AllowCrouching: 1
+  CrouchSlowDownTime: 0.01
   CrouchSpeedModifier: 0.3
   AllowWalls: 1
   ClimbableLayer:
@@ -54,9 +55,9 @@ MonoBehaviour:
   WallJumpTotalInputLossTime: 0.2
   WallJumpInputLossReturnTime: 0.5
   RequireInputPush: 0
-  WallJumpPower: {x: 10, y: 18}
+  WallJumpPower: {x: 10, y: 20}
   WallPushPower: {x: 10, y: 18}
-  WallClimbSpeed: -2.5
+  WallClimbSpeed: -1.5
   WallFallAcceleration: 5
   WallPopForce: 10
   WallCoyoteTime: 0.3
