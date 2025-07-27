@@ -380,7 +380,7 @@ namespace TarodevController
             {
                 _crouching = false;
             }
-
+            _anim.SetBool(CrouchKey, _crouching);
             /*
             if (!_isSquishing)
             {
@@ -544,6 +544,7 @@ namespace TarodevController
         private static readonly int MoveXKey = Animator.StringToHash("MoveX");
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
         private static readonly int SprintKey = Animator.StringToHash("Sprinting");
+        private static readonly int CrouchKey = Animator.StringToHash("Crouching");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 

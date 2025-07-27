@@ -70,7 +70,9 @@ namespace TarodevController
         public bool RequireInputPush;
         public Vector2 WallJumpPower = new(25, 15);
         public Vector2 WallPushPower = new(15, 10);
-        public float WallClimbSpeed = 5;
+        public float WallSlideSpeed = 5;
+        public float WallSlideSlowMultiplier = 0.5f;
+        public float WallSlideFastMultiplier = 2f;
         public float WallFallAcceleration = 20;
         public float WallPopForce = 10;
         public float WallCoyoteTime = 0.3f;

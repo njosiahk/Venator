@@ -843,11 +843,40 @@ namespace TarodevController
 
             if (_isOnWall)
             {
+                /*
                 _constantForce.force = Vector2.zero;
 
                 float wallVelocity;
-                if (_frameInput.Move.y != 0) wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;
-                else wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
+                if (_frameInput.Move.y != 0) wallVelocity = _frameInput.Move.y * Stats.WallSlideSpeed;
+                else wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallSlideSpeed, Stats.WallFallAcceleration * _delta);
+
+                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
+                return;
+                */
+
+                _constantForce.force = Vector2.zero;
+
+                float wallVelocity;
+
+                float slideSpeed = -Stats.WallSlideSpeed;
+
+                if (_frameInput.Move.y < -0.5f) //if holding the down input
+                {
+                    slideSpeed *= Stats.WallSlideFastMultiplier;
+                    Debug.Log($"[WallSlide] Holding down — slideSpeed = {slideSpeed}");
+                }
+                else if (_frameInput.Move.y > 0.5f) //if holding the up input
+                {
+                    slideSpeed *= Stats.WallSlideSlowMultiplier;
+                    Debug.Log($"[WallSlide] Holding up — slideSpeed = {slideSpeed}");
+                }
+                else
+                {
+                    Debug.Log($"[WallSlide] No input — slideSpeed = {slideSpeed}");
+                }
+                
+                wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), slideSpeed, Stats.WallFallAcceleration * _delta);
+                Debug.Log($"[WallSlide] Applying wallVelocity = {wallVelocity}");
 
                 SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
                 return;
