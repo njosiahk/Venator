@@ -122,7 +122,7 @@ namespace TarodevController
         }
         
         #region Squish
-        
+        /*
         [Header("Squish")] [SerializeField] private ParticleSystem.MinMaxCurve _squishMinMaxX;
         [SerializeField] private ParticleSystem.MinMaxCurve _squishMinMaxY;
         [SerializeField] private float _minSquishForce = 6f;
@@ -163,7 +163,7 @@ namespace TarodevController
             _isSquishing = false;
             if (_squishRoutine != null) StopCoroutine(_squishRoutine);
         }
-        
+        */
         #endregion
 
         #region Walls & Ladders
@@ -374,20 +374,20 @@ namespace TarodevController
             {
                 _source.PlayOneShot(_slideClips[Random.Range(0, _slideClips.Length)], Mathf.InverseLerp(0, 5, Mathf.Abs(_player.Velocity.x)));
                 _crouching = true;
-                CancelSquish();
+                //CancelSquish();
             }
             else if (_crouching && !_player.Crouching)
             {
                 _crouching = false;
             }
 
-            
+            /*
             if (!_isSquishing)
             {
                 var percentage = _character.CrouchingHeight / _character.Height;
                 _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, _crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
             }
-            
+            */
         }
 
         #endregion
@@ -427,7 +427,7 @@ namespace TarodevController
         }
 
         private bool _grounded;
-        private Coroutine _squishRoutine;
+        //private Coroutine _squishRoutine;
 
         private void OnGroundedChanged(bool grounded, float impact)
         {
@@ -436,8 +436,8 @@ namespace TarodevController
             if (grounded)
             {
                 _anim.SetBool(GroundedKey, true);
-                CancelSquish();
-                _squishRoutine = StartCoroutine(SquishPlayer(Mathf.Abs(impact)));
+                //CancelSquish();
+                //_squishRoutine = StartCoroutine(SquishPlayer(Mathf.Abs(impact)));
                 _source.PlayOneShot(_splats[Random.Range(0, _splats.Length)],0.5f);
                 _moveParticles.Play();
 
