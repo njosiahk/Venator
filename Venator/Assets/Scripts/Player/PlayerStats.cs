@@ -42,10 +42,12 @@ namespace TarodevController
 
         //Roll
         [Header("Roll"), Space] public bool AllowRoll = true;
-        public float RollVelocity = 50;
+        //public float RollVelocity = 50;
+        public float RollBoostForce = 10f;
         public float RollDuration = 0.2f;
         public float RollCooldown = 1.5f;
         public float RollEndHorizontalMultiplier = 0.5f;
+        public float MinAirMovementForDirectionalRoll = 0.1f;
 
         // Dash (Weapon)
         /*

@@ -14,7 +14,7 @@ namespace TarodevController
         private ConstantForce2D _constantForce;
         private Rigidbody2D _rb;
         private PlayerInput _playerInput;
-
+        [SerializeField] private SpriteRenderer _sprite;
         #endregion
 
         #region Interface
@@ -83,7 +83,8 @@ namespace TarodevController
             if (!TryGetComponent(out _constantForce)) _constantForce = gameObject.AddComponent<ConstantForce2D>();
 
             SetupCharacter();
-
+            if (_sprite == null)
+                _sprite = GetComponentInChildren<SpriteRenderer>();
             PhysicsSimulator.Instance.AddPlayer(this);
         }
 
@@ -616,15 +617,45 @@ namespace TarodevController
 
             if (_rollToConsume && _canRoll && !Crouching && _time > _nextRollTime)
             {
-                var dir = new Vector2(_frameInput.Move.x, Mathf.Max(_frameInput.Move.y, 0f)).normalized;
-                if (dir == Vector2.zero) return;
+                float inputXRaw = _frameInput.Move.x;
+                float inputX = Mathf.Abs(inputXRaw) > 0.01f ? Mathf.Sign(inputXRaw) : 0;
 
-                _rollVel = dir * Stats.RollVelocity;
+                float dirX;
+                //Debug.Log($"[Roll] Sprite is facing {(_sprite.flipX ? "left" : "right")}");
+
+                if (inputX != 0) //Case 1: player is actively holding an input
+                {
+                    dirX = inputX;
+                    //Debug.Log($"[Roll] Case 1: Input held — dirX = {dirX}");
+                }
+                else if (_grounded) //Case 2: player is grounded and not holding an input
+                {
+                    dirX = _sprite.flipX ? -1f : 1f;
+                    //Debug.Log($"[Roll] Case 2: Grounded, no input — facing dirX = {dirX}");
+                }
+                else
+                {
+                    float velocityX = Velocity.x;
+
+                    if (Mathf.Abs(velocityX) > Stats.MinAirMovementForDirectionalRoll) //Case 3: if the player is still moving horizontally in the air
+                    {
+                        dirX = Mathf.Sign(velocityX);
+                        //Debug.Log($"[Roll] Case 3: Airborne with momentum — dirX = {dirX}");
+                    }
+                    else // Case 4: if player is in the air without input or movement
+                    {
+                        dirX = _sprite.flipX ? -1f : 1f;
+                        //Debug.Log($"[Roll] Case 4: Airborne with no momentum — facing dirX = {dirX}");
+                    }
+                }
+
+                _rollVel = new Vector2(Velocity.x + (Stats.RollBoostForce * dirX), Velocity.y);
+
                 _rolling = true;
                 _canRoll = false;
                 _startedRolling = _time;
                 _nextRollTime = _time + Stats.RollCooldown;
-                RollChanged?.Invoke(true, dir);
+                RollChanged?.Invoke(true, new Vector2(dirX, 0));
             }
 
             if (_rolling)

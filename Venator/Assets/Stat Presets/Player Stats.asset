@@ -41,10 +41,11 @@ MonoBehaviour:
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
   AllowRoll: 1
-  RollVelocity: 20
+  RollBoostForce: 25
   RollDuration: 0.1
   RollCooldown: 1
   RollEndHorizontalMultiplier: 0.8
+  MinAirMovementForDirectionalRoll: 0.01
   AllowCrouching: 1
   CrouchSlowDownTime: 0.01
   CrouchSpeedModifier: 0.3
@@ -59,9 +60,9 @@ MonoBehaviour:
   WallPushPower: {x: 10, y: 18}
   WallClimbSpeed: -1.5
   WallFallAcceleration: 5
-  WallPopForce: 10
+  WallPopForce: 12
   WallCoyoteTime: 0.3
-  WallDetectorRange: 0.15
+  WallDetectorRange: 0.2
   AllowLadders: 1
   LadderCooldownTime: 0.15
   AutoAttachToLadders: 1
