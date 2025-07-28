@@ -71,7 +71,7 @@ namespace TarodevController
         public Vector2 WallJumpPower = new(25, 15);
         public Vector2 WallPushPower = new(15, 10);
         public float WallSlideSpeed = 5;
-        public float WallSlideSlowMultiplier = 0.5f;
+        public float WallSlideSlowDivisor = 0.5f;
         public float WallSlideFastMultiplier = 2f;
         public float WallFallAcceleration = 20;
         public float WallPopForce = 10;

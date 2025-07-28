@@ -15,6 +15,7 @@ namespace TarodevController
         private Rigidbody2D _rb;
         private PlayerInput _playerInput;
         [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private float _verticalInputCacheDuration = 0.2f;
         #endregion
 
         #region Interface
@@ -626,12 +627,12 @@ namespace TarodevController
                 if (inputX != 0) //Case 1: player is actively holding an input
                 {
                     dirX = inputX;
-                    //Debug.Log($"[Roll] Case 1: Input held — dirX = {dirX}");
+                    //Debug.Log($"[Roll] Case 1: Input held ï¿½ dirX = {dirX}");
                 }
                 else if (_grounded) //Case 2: player is grounded and not holding an input
                 {
                     dirX = _sprite.flipX ? -1f : 1f;
-                    //Debug.Log($"[Roll] Case 2: Grounded, no input — facing dirX = {dirX}");
+                    //Debug.Log($"[Roll] Case 2: Grounded, no input ï¿½ facing dirX = {dirX}");
                 }
                 else
                 {
@@ -640,12 +641,12 @@ namespace TarodevController
                     if (Mathf.Abs(velocityX) > Stats.MinAirMovementForDirectionalRoll) //Case 3: if the player is still moving horizontally in the air
                     {
                         dirX = Mathf.Sign(velocityX);
-                        //Debug.Log($"[Roll] Case 3: Airborne with momentum — dirX = {dirX}");
+                        //Debug.Log($"[Roll] Case 3: Airborne with momentum ï¿½ dirX = {dirX}");
                     }
                     else // Case 4: if player is in the air without input or movement
                     {
                         dirX = _sprite.flipX ? -1f : 1f;
-                        //Debug.Log($"[Roll] Case 4: Airborne with no momentum — facing dirX = {dirX}");
+                        //Debug.Log($"[Roll] Case 4: Airborne with no momentum ï¿½ facing dirX = {dirX}");
                     }
                 }
 
@@ -843,43 +844,41 @@ namespace TarodevController
 
             if (_isOnWall)
             {
+                
+                _constantForce.force = Vector2.zero;
+
+                float multiplier = 1f;
+                float inputY = _frameInput.Move.y;
+
+                if (inputY < 0) // Holding down
+                {
+                    multiplier = Stats.WallSlideFastMultiplier;
+                    //Debug.Log($"[WallSlide] Holding Down â€” Fast Multiplier: {multiplier}");
+                }
+                else if (inputY > 0) // Holding up
+                {
+                    multiplier = 1f / Stats.WallSlideSlowDivisor;
+                    //Debug.Log($"[WallSlide] Holding Up â€” Slow Divisor: {Stats.WallSlideSlowDivisor} => Multiplier: {multiplier}");
+                }
+
+                float targetSlideSpeed = -Stats.WallSlideSpeed * multiplier;
+
+                // Only apply if velocity.y is greater (slower) than desired slide speed
+                float wallVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, targetSlideSpeed, Stats.WallFallAcceleration * _delta);
+
+                //Debug.Log($"[WallSlide] TargetSpeed: {targetSlideSpeed}, ResultingVelocityY: {wallVelocity}");
+
+                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
+                return;
+                
                 /*
                 _constantForce.force = Vector2.zero;
 
-                float wallVelocity;
-                if (_frameInput.Move.y != 0) wallVelocity = _frameInput.Move.y * Stats.WallSlideSpeed;
-                else wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallSlideSpeed, Stats.WallFallAcceleration * _delta);
-
-                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
+                SetVelocity(new Vector2(_rb.linearVelocity.x, -1000f)); // Force fixed velocity for test
+                Debug.Log($"[WallSlideForceTest] Velocity forced to: {-1000f}");
+                
                 return;
                 */
-
-                _constantForce.force = Vector2.zero;
-
-                float wallVelocity;
-
-                float slideSpeed = -Stats.WallSlideSpeed;
-
-                if (_frameInput.Move.y < -0.5f) //if holding the down input
-                {
-                    slideSpeed *= Stats.WallSlideFastMultiplier;
-                    Debug.Log($"[WallSlide] Holding down — slideSpeed = {slideSpeed}");
-                }
-                else if (_frameInput.Move.y > 0.5f) //if holding the up input
-                {
-                    slideSpeed *= Stats.WallSlideSlowMultiplier;
-                    Debug.Log($"[WallSlide] Holding up — slideSpeed = {slideSpeed}");
-                }
-                else
-                {
-                    Debug.Log($"[WallSlide] No input — slideSpeed = {slideSpeed}");
-                }
-                
-                wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), slideSpeed, Stats.WallFallAcceleration * _delta);
-                Debug.Log($"[WallSlide] Applying wallVelocity = {wallVelocity}");
-
-                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
-                return;
             }
 
             if (ClimbingLadder)
