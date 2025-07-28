@@ -58,7 +58,9 @@ MonoBehaviour:
   RequireInputPush: 0
   WallJumpPower: {x: 10, y: 20}
   WallPushPower: {x: 10, y: 18}
-  WallClimbSpeed: -1.5
+  WallSlideSpeed: 1
+  WallSlideSlowMultiplier: 2
+  WallSlideFastMultiplier: 2
   WallFallAcceleration: 5
   WallPopForce: 12
   WallCoyoteTime: 0.3
