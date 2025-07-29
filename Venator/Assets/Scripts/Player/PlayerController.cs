@@ -862,23 +862,11 @@ namespace TarodevController
                 }
 
                 float targetSlideSpeed = -Stats.WallSlideSpeed * multiplier;
-
-                // Only apply if velocity.y is greater (slower) than desired slide speed
                 float wallVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, targetSlideSpeed, Stats.WallFallAcceleration * _delta);
-
                 //Debug.Log($"[WallSlide] TargetSpeed: {targetSlideSpeed}, ResultingVelocityY: {wallVelocity}");
 
                 SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
                 return;
-                
-                /*
-                _constantForce.force = Vector2.zero;
-
-                SetVelocity(new Vector2(_rb.linearVelocity.x, -1000f)); // Force fixed velocity for test
-                Debug.Log($"[WallSlideForceTest] Velocity forced to: {-1000f}");
-                
-                return;
-                */
             }
 
             if (ClimbingLadder)

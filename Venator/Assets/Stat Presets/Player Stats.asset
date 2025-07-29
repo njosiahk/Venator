@@ -20,20 +20,20 @@ MonoBehaviour:
     m_Bits: 321
   CharacterSize:
     Height: 1.1
-    Width: 0.6
+    Width: 0.5
     StepHeight: 0.2
     CrouchHeight: 0.8
     RayInset: 0.01
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
   PositionCorrectionMode: 0
-  BaseSpeed: 6
+  BaseSpeed: 5
   Acceleration: 100
   Friction: 90
   AirFrictionMultiplier: 0.35
   DirectionCorrectionMultiplier: 3
   MaxWalkableSlope: 46
-  SprintSpeedMultiplier: 1.75
+  SprintSpeedMultiplier: 2.1
   ExtraConstantGravity: 40
   BufferedJumpTime: 0.15
   CoyoteTime: 0.05
@@ -41,7 +41,7 @@ MonoBehaviour:
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
   AllowRoll: 1
-  RollBoostForce: 25
+  RollBoostForce: 20
   RollDuration: 0.1
   RollCooldown: 1
   RollEndHorizontalMultiplier: 0.8

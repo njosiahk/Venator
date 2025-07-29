@@ -113,9 +113,9 @@ namespace TarodevController
 
             HandleCrouching();
 
-            HandleWallSlideEffects();
+            HandleWallSlide();
         }
-        
+
         private void LateUpdate()
         {
             _trailRenderer.position = Vector2.SmoothDamp(_trailRenderer.position, transform.position + _trailOffset, ref _trailVel, 0.02f);
@@ -178,7 +178,7 @@ namespace TarodevController
         [SerializeField] private float _wallSlideParticleOffset = 0.3f;
         [SerializeField] private float _distancePerClimbSound = 0.2f;
 
-        private bool _isOnWall, _isSliding;
+        private bool _isOnWall, _isWallSliding;
 
         private float _slidingVolumeGoal;
         private float _slideAudioVel;
@@ -195,26 +195,27 @@ namespace TarodevController
                 PlaySound(_wallGrabClip, 0.5f);
             }
         }
-        
-        private void HandleWallSlideEffects()
-        {
-            var slidingThisFrame = _isOnWall && !_grounded && _player.Velocity.y < 0;
 
-            if (!_isSliding && slidingThisFrame)
+        private void HandleWallSlide()
+        {
+            var slidingThisFrame = _isOnWall && !_grounded && _player.Velocity.y < -0.05f;
+            _anim.SetBool(WallSlideKey, slidingThisFrame);
+            _anim.SetFloat("WallSlideSpeed", _anim.GetBool(WallSlideKey) ? Mathf.Abs(_player.Velocity.y) : 0f);
+            if (!_isWallSliding && slidingThisFrame)
             {
-                _isSliding = true;
+                _isWallSliding = true;
                 _wallSlideParticles.Play();
             }
-            else if (_isSliding && !slidingThisFrame)
+            else if (_isWallSliding && !slidingThisFrame)
             {
-                _isSliding = false;
+                _isWallSliding = false;
                 _wallSlideParticles.Stop();
             }
 
             SetParticleColor(new Vector2(_player.WallDirection, 0), _wallSlideParticles);
             _wallSlideParticles.transform.localPosition = new Vector3(_wallSlideParticleOffset * _player.WallDirection, 0, 0);
 
-            var requiredAudio = _isSliding || _player.ClimbingLadder && _player.Velocity.y < 0;
+            var requiredAudio = _isWallSliding || _player.ClimbingLadder && _player.Velocity.y < 0;
             var point = requiredAudio ? Mathf.InverseLerp(0, -_player.Stats.LadderSlideSpeed, _player.Velocity.y) : 0;
             _wallSlideSource.volume = Mathf.SmoothDamp(_wallSlideSource.volume, Mathf.Lerp(0, _maxWallSlideVolume, point), ref _slideAudioVel, 0.2f);
 
@@ -276,14 +277,15 @@ namespace TarodevController
         private void HandleSpriteFlip(float xInput)
         {
             if (_flipLockoutTimer > 0f) return; //no flipping during lockout
-            if (xInput != 0) _sprite.flipX = xInput < 0;
+            if (_isOnWall && !_grounded)_sprite.flipX = _player.WallDirection > 0; //if on wall, flip based on wall direction
+            else if (xInput != 0) _sprite.flipX = xInput < 0; //flip sprite based on inpit direction
         }
 
         #endregion
 
-        /*
+        
         #region Tilt
-
+        /*
         [Header("Tilt")] [SerializeField] private float _runningTilt = 5; // In degrees around the Z axis
         [SerializeField] private float _maxTilt = 10; // In degrees around the Z axis
         [SerializeField] private float _tiltSmoothTime = 0.1f;
@@ -306,9 +308,9 @@ namespace TarodevController
             // Rotate towards the smoothed target
             _anim.transform.up = smoothRot;
         }
-
-        #endregion
         */
+        #endregion
+        
 
         #region Running & Walking
         /*
@@ -545,6 +547,7 @@ namespace TarodevController
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
         private static readonly int SprintKey = Animator.StringToHash("Sprinting");
         private static readonly int CrouchKey = Animator.StringToHash("Crouching");
+        private static readonly int WallSlideKey = Animator.StringToHash("WallSliding");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 
