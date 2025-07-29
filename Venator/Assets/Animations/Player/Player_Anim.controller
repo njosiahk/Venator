@@ -148,7 +148,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 4d478ee87c3dbf94f8a1e017e706caab, type: 2}
-    m_Threshold: 1.3
+    m_Threshold: 6
     m_Position: {x: 0, y: 0}
     m_TimeScale: 0.01
     m_CycleOffset: 0
@@ -156,7 +156,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 2af58a8cf4d249642bcd99f74b9173a5, type: 2}
-    m_Threshold: 3
+    m_Threshold: 10
     m_Position: {x: 0, y: 0}
     m_TimeScale: 0.01
     m_CycleOffset: 0
@@ -164,7 +164,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 5086794c54fbb0e4f87149061209caaf, type: 2}
-    m_Threshold: 12
+    m_Threshold: 16
     m_Position: {x: 0, y: 0}
     m_TimeScale: 0.01
     m_CycleOffset: 0
@@ -172,8 +172,8 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: WallSlideSpeed
   m_BlendParameterY: MoveX
-  m_MinThreshold: 1.3
-  m_MaxThreshold: 12
+  m_MinThreshold: 6
+  m_MaxThreshold: 16
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -814,7 +814,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 220, y: -210, z: 0}
   m_EntryPosition: {x: -10, y: -10, z: 0}
-  m_ExitPosition: {x: 810, y: -330, z: 0}
+  m_ExitPosition: {x: 440, y: -210, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 7105103835865480566}
 --- !u!1101 &4435244507605203279

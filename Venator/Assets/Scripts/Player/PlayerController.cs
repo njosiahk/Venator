@@ -841,33 +841,55 @@ namespace TarodevController
                 SetVelocity(_rollVel);
                 return;
             }
-
-            if (_isOnWall)
+            if (_isOnWall) //wallslide
             {
-                
                 _constantForce.force = Vector2.zero;
 
-                float multiplier = 1f;
-                float inputY = _frameInput.Move.y;
+                //Wall slide speed progression
+                Stats.WallSlideTimer += _delta;
 
-                if (inputY < 0) // Holding down
+                //How much time has passed as a percentage of max slide time
+                float t = Mathf.Clamp01(Stats.WallSlideTimer / Stats.WallSlideMaxAccelTime);
+
+                // Use a steeper curve for snappier acceleration:
+                t = Mathf.SmoothStep(0, 1, t); // or try Mathf.Pow(t, 2.5f) for more punch
+
+                //target base speed (from 3 -> 12 over time)
+                float targetWallSlideSpeed = Mathf.Lerp(Stats.InitialWallSlideSpeed, Stats.MaxWallSlideSpeed, t);
+
+                //enforce speed floor
+                targetWallSlideSpeed = Mathf.Max(targetWallSlideSpeed, Stats.MinWallSlideSpeed);
+
+                /*
+                //Apply directional multiplier
+                float slideMult = 1f;
+                if (_frameInput.Move.y < 0) // Holding down
                 {
-                    multiplier = Stats.WallSlideFastMultiplier;
-                    //Debug.Log($"[WallSlide] Holding Down — Fast Multiplier: {multiplier}");
+                    slideMult = Stats.WallSlideFastMultiplier;
                 }
-                else if (inputY > 0) // Holding up
+                else if (_frameInput.Move.y > 0) // Holding up
                 {
-                    multiplier = 1f / Stats.WallSlideSlowDivisor;
-                    //Debug.Log($"[WallSlide] Holding Up — Slow Divisor: {Stats.WallSlideSlowDivisor} => Multiplier: {multiplier}");
+                    slideMult = 1f / Stats.WallSlideSlowDivisor;
                 }
+                
 
-                float targetSlideSpeed = -Stats.WallSlideSpeed * multiplier;
-                float wallVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, targetSlideSpeed, Stats.WallFallAcceleration * _delta);
-                //Debug.Log($"[WallSlide] TargetSpeed: {targetSlideSpeed}, ResultingVelocityY: {wallVelocity}");
+                float velocityTarget = -targetWallSlideSpeed;
+                float adjustedAccel = Stats.WallFallAcceleration * slideMult;
+                Debug.Log($"[Accel]={adjustedAccel:F2}, [SlideMult]={slideMult:F2}");
+                float newSlideVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, velocityTarget, adjustedAccel * _delta);
+                */
 
-                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
+                float newSlideVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, -targetWallSlideSpeed, Stats.WallFallAcceleration * _delta);
+
+                SetVelocity(new Vector2(_rb.linearVelocity.x, newSlideVelocity));
                 return;
             }
+            else
+            {
+                Stats.WallSlideTimer = 0f; // Reset wall slide timer when not on a wall
+            }
+
+
 
             if (ClimbingLadder)
             {
