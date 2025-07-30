@@ -114,6 +114,8 @@ namespace TarodevController
             HandleCrouching();
 
             HandleWallSlide();
+
+            HandleRoll();
         }
 
         private void LateUpdate()
@@ -281,9 +283,29 @@ namespace TarodevController
             else if (xInput != 0) _sprite.flipX = xInput < 0; //flip sprite based on inpit direction
         }
 
+        private bool _rollCompleted;
+
+        private void HandleRoll()
+        {
+            var stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsName("Player_Roll"))
+            {
+                if (!_rollCompleted && stateInfo.normalizedTime >= 1f)
+                {
+                    _anim.SetBool(RollKey, false);
+                    _rollCompleted = true;
+                }
+            }
+            else
+            {
+                _rollCompleted = false; // Reset when no longer in roll state
+            }
+        }
+
         #endregion
 
-        
+
         #region Tilt
         /*
         [Header("Tilt")] [SerializeField] private float _runningTilt = 5; // In degrees around the Z axis
@@ -310,7 +332,7 @@ namespace TarodevController
         }
         */
         #endregion
-        
+
 
         #region Running & Walking
         /*
@@ -455,6 +477,7 @@ namespace TarodevController
         }
         private void OnRollChanged(bool rolling, Vector2 dir)
         {
+            _anim.SetBool(RollKey, true);
             if (rolling)
             {
                 _rollParticles.Play();
@@ -548,6 +571,7 @@ namespace TarodevController
         private static readonly int SprintKey = Animator.StringToHash("Sprinting");
         private static readonly int CrouchKey = Animator.StringToHash("Crouching");
         private static readonly int WallSlideKey = Animator.StringToHash("WallSliding");
+        private static readonly int RollKey = Animator.StringToHash("Rolling");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 

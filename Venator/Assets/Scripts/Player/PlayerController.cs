@@ -616,7 +616,7 @@ namespace TarodevController
         {
             if (!Stats.AllowRoll) return;
 
-            if (_rollToConsume && _canRoll && !Crouching && _time > _nextRollTime)
+            if (_rollToConsume && _canRoll && _time > _nextRollTime)
             {
                 float inputXRaw = _frameInput.Move.x;
                 float inputX = Mathf.Abs(inputXRaw) > 0.01f ? Mathf.Sign(inputXRaw) : 0;
