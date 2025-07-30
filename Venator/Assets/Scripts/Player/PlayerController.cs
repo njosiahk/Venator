@@ -657,6 +657,8 @@ namespace TarodevController
                 _startedRolling = _time;
                 _nextRollTime = _time + Stats.RollCooldown;
                 RollChanged?.Invoke(true, new Vector2(dirX, 0));
+
+                SetColliderMode(ColliderMode.Crouching);
             }
 
             if (_rolling)
@@ -668,6 +670,11 @@ namespace TarodevController
 
                     SetVelocity(new Vector2(Velocity.x * Stats.RollEndHorizontalMultiplier, Velocity.y));
                     if (_grounded) _canRoll = true;
+
+                    if (CanStand)
+                        SetColliderMode(ColliderMode.Standard);
+                    else
+                        SetColliderMode(ColliderMode.Crouching);
                 }
             }
         }
@@ -720,7 +727,7 @@ namespace TarodevController
         private float _timeStartedCrouching;
         private bool CrouchPressed => _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
 
-        private bool CanStand => IsStandingPosClear(_rb.position + _character.StandingColliderCenter);
+        public bool CanStand => IsStandingPosClear(_rb.position + _character.StandingColliderCenter);
         private bool IsStandingPosClear(Vector2 pos) => CheckPos(pos, _character.StandingColliderSize - SKIN_WIDTH * Vector2.one);
 
         // We handle crouch AFTER frame movements are done to avoid transient velocity issues
@@ -734,6 +741,8 @@ namespace TarodevController
 
         private void ToggleCrouching(bool shouldCrouch)
         {
+            if (_rolling) return;
+
             if (shouldCrouch)
             {
                 _timeStartedCrouching = _time;
@@ -1107,6 +1116,7 @@ namespace TarodevController
         public int LastWallDirection { get; }
         public bool ClimbingLadder { get; }
         public bool IsSprinting { get; }
+        public bool CanStand { get; }   
 
         // External force
         public void AddFrameForce(Vector2 force, bool resetVelocity = false);

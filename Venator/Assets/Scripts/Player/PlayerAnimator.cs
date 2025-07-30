@@ -294,6 +294,12 @@ namespace TarodevController
                 if (!_rollCompleted && stateInfo.normalizedTime >= 1f)
                 {
                     _anim.SetBool(RollKey, false);
+
+                    if (_player.Crouching || !_player.CanStand) // <--- this ensures crouch remains if blocked
+                        _anim.SetBool(CrouchKey, true);
+                    else
+                        _anim.SetBool(CrouchKey, false);
+
                     _rollCompleted = true;
                 }
             }
@@ -394,13 +400,15 @@ namespace TarodevController
 
         private void HandleCrouching()
         {
-            if (!_crouching && _player.Crouching)
+            bool crouchState = _player.Crouching || _anim.GetBool(RollKey) || !_player.CanStand;
+
+            if (!_crouching && crouchState)
             {
                 _source.PlayOneShot(_slideClips[Random.Range(0, _slideClips.Length)], Mathf.InverseLerp(0, 5, Mathf.Abs(_player.Velocity.x)));
                 _crouching = true;
                 //CancelSquish();
             }
-            else if (_crouching && !_player.Crouching)
+            else if (_crouching && !crouchState)
             {
                 _crouching = false;
             }
@@ -478,6 +486,7 @@ namespace TarodevController
         private void OnRollChanged(bool rolling, Vector2 dir)
         {
             _anim.SetBool(RollKey, true);
+            _anim.SetBool(CrouchKey, true);
             if (rolling)
             {
                 _rollParticles.Play();
