@@ -190,6 +190,10 @@ namespace TarodevController
             {
                 _rollToConsume = true;
             }
+            if (_frameInput.CrouchHeld && _grounded && !_rolling && !_isSliding && Mathf.Abs(_frameInput.Move.x) > 0.1f)
+            {
+                StartSlide();
+            }
             /*
             if (_frameInput.DashDown)
             {
@@ -725,7 +729,9 @@ namespace TarodevController
         #region Crouching
 
         private float _timeStartedCrouching;
-        private bool CrouchPressed => _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
+        //private bool CrouchPressed => _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
+        private bool CrouchHeld => _frameInput.CrouchHeld || _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
+
 
         public bool CanStand => IsStandingPosClear(_rb.position + _character.StandingColliderCenter);
         private bool IsStandingPosClear(Vector2 pos) => CheckPos(pos, _character.StandingColliderSize - SKIN_WIDTH * Vector2.one);
@@ -735,8 +741,8 @@ namespace TarodevController
         {
             if (!Stats.AllowCrouching) return;
 
-            if (!Crouching && CrouchPressed && _grounded) ToggleCrouching(true);
-            else if (Crouching && (!CrouchPressed || !_grounded)) ToggleCrouching(false);
+            if (!Crouching && CrouchHeld && _grounded) ToggleCrouching(true);
+            else if (Crouching && (!CrouchHeld || !_grounded)) ToggleCrouching(false);
         }
 
         private void ToggleCrouching(bool shouldCrouch)
@@ -766,6 +772,28 @@ namespace TarodevController
             return !hit;
         }
 
+        #endregion
+
+        #region Slide
+
+        private bool _isSliding;
+        private Vector2 _slideDirection;
+
+        private void StartSlide()
+        {
+            if (!Stats.AllowSlide) return;
+
+            _isSliding = true;
+
+            // Get input direction (left or right)
+            float dirX = Mathf.Sign(_frameInput.Move.x);
+            _slideDirection = new Vector2(dirX, 0);
+
+            // Apply boost instead of setting velocity
+            AddFrameForce(_slideDirection * Stats.SlideBoostForce);
+
+            SetColliderMode(ColliderMode.Crouching);
+        }
         #endregion
 
         #region Move
@@ -888,9 +916,9 @@ namespace TarodevController
                 float newSlideVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, velocityTarget, adjustedAccel * _delta);
                 */
 
-                float newSlideVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, -targetWallSlideSpeed, Stats.WallFallAcceleration * _delta);
+                float newWallSlideVelocity = Mathf.MoveTowards(_rb.linearVelocity.y, -targetWallSlideSpeed, Stats.WallFallAcceleration * _delta);
 
-                SetVelocity(new Vector2(_rb.linearVelocity.x, newSlideVelocity));
+                SetVelocity(new Vector2(_rb.linearVelocity.x, newWallSlideVelocity));
                 return;
             }
             else
@@ -999,6 +1027,40 @@ namespace TarodevController
                 _totalTransientVelocityAppliedLastFrame = _frameTransientVelocity + _decayingTransientVelocity;
                 return _totalTransientVelocityAppliedLastFrame;
             }
+
+            // Slide-to-crouch transition logic
+            if (_isSliding)
+            {
+                // Check if slide should end
+                float horizontalSpeed = Mathf.Abs(Velocity.x);
+                if (horizontalSpeed < Stats.WalkSpeedThreshold || !_frameInput.CrouchHeld)
+                {
+                    _isSliding = false;
+
+                    if (_grounded)
+                    {
+                        if (CrouchHeld && !CanStand)
+                        {
+                            ToggleCrouching(true); // Stay crouched if head is blocked
+                        }
+                        else if (CrouchHeld)
+                        {
+                            ToggleCrouching(true); // Transition from slide to crouch
+                        }
+                        else
+                        {
+                            ToggleCrouching(false); // Stand up if crouch not held
+                        }
+                    }
+                    else
+                    {
+                        // In air — just stand collider (or stay in crouch if you prefer)
+                        if (CanStand)
+                            SetColliderMode(ColliderMode.Standard);
+                    }
+                }
+            }
+
         }
 
         private void SetVelocity(Vector2 newVel)

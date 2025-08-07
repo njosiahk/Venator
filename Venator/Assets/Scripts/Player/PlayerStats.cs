@@ -40,7 +40,7 @@ namespace TarodevController
         public float EndJumpEarlyExtraForceMultiplier = 3;
         public int MaxAirJumps = 1;
 
-        //Roll
+        // Roll
         [Header("Roll"), Space] public bool AllowRoll = true;
         //public float RollVelocity = 50;
         public float RollBoostForce = 10f;
@@ -48,6 +48,14 @@ namespace TarodevController
         public float RollCooldown = 1.5f;
         public float RollEndHorizontalMultiplier = 0.5f;
         public float MinAirMovementForDirectionalRoll = 0.1f;
+
+        // Slide
+        [Header("Slide"), Space] public bool AllowSlide = true;
+        public float SlideBoostForce = 10f;
+        public float SlideFriction = 0.5f;
+        public float MinSlideSpeed = 3f;
+        public float WalkSpeedThreshold = 2f;
+
 
         // Dash (Weapon)
         /*

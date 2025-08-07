@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -10,7 +10,7 @@ namespace TarodevController
     {
 #if ENABLE_INPUT_SYSTEM
         private PlayerInputActions _actions;
-        private InputAction _move, _jump, _roll, _dash, _sprint;
+        private InputAction _move, _jump, _roll, _dash, _sprint, _crouch;
 
         private void Awake()
         {
@@ -20,6 +20,7 @@ namespace TarodevController
             _roll = _actions.Player.Roll;
             //_dash = _actions.Player.Dash;
             _sprint = _actions.Player.Sprint;
+            _crouch = _actions.Player.Crouch;
         }
 
         private void OnEnable() => _actions.Enable();
@@ -35,7 +36,8 @@ namespace TarodevController
                 RollDown = _roll.WasPressedThisFrame(),
                 //DashDown = _dash.WasPressedThisFrame(),
                 Move = _move.ReadValue<Vector2>(),
-                SprintHeld = _sprint.IsPressed()
+                SprintHeld = _sprint.IsPressed(),
+                CrouchHeld = _crouch.IsPressed()
             };
         }
 #else
@@ -61,5 +63,6 @@ namespace TarodevController
         public bool RollDown;
         //public bool DashDown;
         public bool SprintHeld;
+        public bool CrouchHeld;
     }
 }

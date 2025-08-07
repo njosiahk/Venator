@@ -147,6 +147,15 @@ namespace TarodevController
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""8265cab6-df35-4522-9e80-76716a08a491"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -402,6 +411,39 @@ namespace TarodevController
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""197aa27f-4d66-4b40-b149-4d0133d6314f"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dd80608-7f00-41ef-bae0-69ac6c4435b9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3835004f-79ce-4e9f-8251-069fff5a37fd"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -477,6 +519,7 @@ namespace TarodevController
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_ExampleAction = m_Player.FindAction("ExampleAction", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+            m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         }
 
         ~@PlayerInputActions()
@@ -563,6 +606,7 @@ namespace TarodevController
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_ExampleAction;
         private readonly InputAction m_Player_Sprint;
+        private readonly InputAction m_Player_Crouch;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -598,6 +642,10 @@ namespace TarodevController
             /// Provides access to the underlying input action "Player/Sprint".
             /// </summary>
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Crouch".
+            /// </summary>
+            public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -642,6 +690,9 @@ namespace TarodevController
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
 
             /// <summary>
@@ -671,6 +722,9 @@ namespace TarodevController
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
+                @Crouch.started -= instance.OnCrouch;
+                @Crouch.performed -= instance.OnCrouch;
+                @Crouch.canceled -= instance.OnCrouch;
             }
 
             /// <summary>
@@ -818,6 +872,13 @@ namespace TarodevController
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSprint(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCrouch(InputAction.CallbackContext context);
         }
     }
 }
