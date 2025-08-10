@@ -46,6 +46,14 @@ MonoBehaviour:
   RollCooldown: 1
   RollEndHorizontalMultiplier: 0.8
   MinAirMovementForDirectionalRoll: 0.01
+  AllowSlide: 1
+  SlideMinStartSpeed: 5
+  SlideBoostForce: 8
+  SlideBoostTime: 0.12
+  SlideFrictionPerSec: 0.75
+  SlideToCrouchSpeed: 1.8
+  AirSlideMinStartSpeed: 5
+  AirSlideGravityMultiplier: 0.5
   AllowCrouching: 1
   CrouchSlowDownTime: 0.01
   CrouchSpeedModifier: 0.3

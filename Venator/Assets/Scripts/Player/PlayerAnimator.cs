@@ -68,6 +68,7 @@ namespace TarodevController
             _player.GroundedChanged += OnGroundedChanged;
             _player.RollChanged += OnRollChanged;
             //_player.DashChanged += OnDashChanged;
+            _player.SlideChanged += OnSlideChanged;
             _player.WallGrabChanged += OnWallGrabChanged;
             _player.Repositioned += PlayerOnRepositioned;
             _player.ToggledPlayer += PlayerOnToggledPlayer;
@@ -81,6 +82,7 @@ namespace TarodevController
             _player.GroundedChanged -= OnGroundedChanged;
             _player.RollChanged -= OnRollChanged;
             //_player.DashChanged -= OnDashChanged;
+            _player.SlideChanged -= OnSlideChanged;
             _player.WallGrabChanged -= OnWallGrabChanged;
             _player.Repositioned -= PlayerOnRepositioned;
             _player.ToggledPlayer -= PlayerOnToggledPlayer;
@@ -192,11 +194,19 @@ namespace TarodevController
         private void OnWallGrabChanged(bool onWall)
         {
             _isOnWall = onWall;
+
             if (_isOnWall)
             {
+                // make sure slide-facing lock is released when we hit a wall
+                _lockFacingDuringSlide = false;
+
+                // face the wall you're on
+                _sprite.flipX = _player.WallDirection > 0;
+
                 PlaySound(_wallGrabClip, 0.5f);
             }
         }
+
 
         private void HandleWallSlide()
         {
@@ -259,9 +269,9 @@ namespace TarodevController
             _ladderClimbAudioIndex = (_ladderClimbAudioIndex + 1) % _ladderClimbClips.Length;
             PlaySound(_ladderClimbClips[_ladderClimbAudioIndex], 0.07f);
         }
-        
+
         #endregion
-        
+
         #region Animation
         /*
         [Header("Idle")] [SerializeField, Range(1f, 3f)]
@@ -278,10 +288,21 @@ namespace TarodevController
         */
         private void HandleSpriteFlip(float xInput)
         {
-            if (_flipLockoutTimer > 0f) return; //no flipping during lockout
-            if (_isOnWall && !_grounded)_sprite.flipX = _player.WallDirection > 0; //if on wall, flip based on wall direction
-            else if (xInput != 0) _sprite.flipX = xInput < 0; //flip sprite based on inpit direction
+            // Freeze facing during slide
+            if (_lockFacingDuringSlide)
+            {
+                _sprite.flipX = _slideFacingLeft;
+                return;
+            }
+
+            if (_flipLockoutTimer > 0f) return; // no flipping during lockout
+
+            if (_isOnWall && !_grounded)
+                _sprite.flipX = _player.WallDirection > 0;
+            else if (xInput != 0)
+                _sprite.flipX = xInput < 0;
         }
+
 
         private bool _rollCompleted;
 
@@ -291,11 +312,12 @@ namespace TarodevController
 
             if (stateInfo.IsName("Player_Roll"))
             {
-                if (!_rollCompleted && stateInfo.normalizedTime >= 1f)
+                // Don't end the roll while the animator is blending
+                if (!_anim.IsInTransition(0) && !_rollCompleted && stateInfo.normalizedTime >= 0.999f)
                 {
                     _anim.SetBool(RollKey, false);
 
-                    if (_player.Crouching || !_player.CanStand) // <--- this ensures crouch remains if blocked
+                    if (_player.Crouching || !_player.CanStand)
                         _anim.SetBool(CrouchKey, true);
                     else
                         _anim.SetBool(CrouchKey, false);
@@ -305,9 +327,10 @@ namespace TarodevController
             }
             else
             {
-                _rollCompleted = false; // Reset when no longer in roll state
+                _rollCompleted = false;
             }
         }
+
 
         #endregion
 
@@ -485,20 +508,56 @@ namespace TarodevController
         }
         private void OnRollChanged(bool rolling, Vector2 dir)
         {
-            _anim.SetBool(RollKey, true);
-            _anim.SetBool(CrouchKey, true);
+            _anim.SetBool(RollKey, rolling);
+
             if (rolling)
             {
+                // enter roll visuals
+                _anim.SetBool(CrouchKey, true);
                 _rollParticles.Play();
                 _rollRingTransform.up = dir;
                 _rollRingParticles.Play();
-                _source.PlayOneShot(_rollClip,0.5f);
+                _source.PlayOneShot(_rollClip, 0.5f);
             }
             else
             {
+                // exit roll visuals
                 _rollParticles.Stop();
+
+                // let normal crouch logic take over
+                // only clear crouch if we actually CAN stand and the controller isn't still crouching
+                if (_player.CanStand && !_player.Crouching)
+                    _anim.SetBool(CrouchKey, false);
             }
         }
+
+        // Lock facing while sliding
+        private bool _lockFacingDuringSlide;
+        private bool _slideFacingLeft;
+
+        private void OnSlideChanged(bool sliding, Vector2 dir)
+        {
+            _anim.SetBool(SlideKey, sliding);
+
+            if (sliding)
+            {
+                // lock current facing for the duration of the slide
+                if (Mathf.Abs(dir.x) > 0.01f) _sprite.flipX = dir.x < 0;
+                _slideFacingLeft = _sprite.flipX;
+                _lockFacingDuringSlide = true;
+
+                _anim.SetBool(CrouchKey, true);
+                if (_slideClips != null && _slideClips.Length > 0)
+                    _source.PlayOneShot(_slideClips[Random.Range(0, _slideClips.Length)],
+                        Mathf.InverseLerp(0, 5, Mathf.Abs(_player.Velocity.x)));
+            }
+            else
+            {
+                _lockFacingDuringSlide = false;
+            }
+        }
+
+
         /*
         private void OnDashChanged(bool dashing, Vector2 dir)
         {
@@ -581,6 +640,7 @@ namespace TarodevController
         private static readonly int CrouchKey = Animator.StringToHash("Crouching");
         private static readonly int WallSlideKey = Animator.StringToHash("WallSliding");
         private static readonly int RollKey = Animator.StringToHash("Rolling");
+        private static readonly int SlideKey = Animator.StringToHash("Sliding");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 

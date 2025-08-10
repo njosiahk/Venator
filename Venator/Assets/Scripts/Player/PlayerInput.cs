@@ -37,6 +37,7 @@ namespace TarodevController
                 //DashDown = _dash.WasPressedThisFrame(),
                 Move = _move.ReadValue<Vector2>(),
                 SprintHeld = _sprint.IsPressed(),
+                CrouchDown = _crouch.WasPressedThisFrame(),
                 CrouchHeld = _crouch.IsPressed()
             };
         }
@@ -63,6 +64,7 @@ namespace TarodevController
         public bool RollDown;
         //public bool DashDown;
         public bool SprintHeld;
+        public bool CrouchDown;
         public bool CrouchHeld;
     }
 }

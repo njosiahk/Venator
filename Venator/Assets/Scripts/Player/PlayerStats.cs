@@ -51,10 +51,13 @@ namespace TarodevController
 
         // Slide
         [Header("Slide"), Space] public bool AllowSlide = true;
-        public float SlideBoostForce = 10f;
-        public float SlideFriction = 0.5f;
-        public float MinSlideSpeed = 3f;
-        public float WalkSpeedThreshold = 2f;
+        public float SlideMinStartSpeed = 5f;     // must be this fast to start
+        public float SlideBoostForce = 10f;        // total horizontal boost
+        public float SlideBoostTime = 0.12f;      // ramp time for the boost
+        public float SlideFrictionPerSec = 1.6f;  // exponential decay rate
+        public float SlideToCrouchSpeed = 1.8f;   // if slower than this AND crouch still held -> crouch
+        public float AirSlideMinStartSpeed = 0f;      // ok to start from rest if you want a kick
+        public float AirSlideGravityMultiplier = 1f;  // 1 = normal gravity while air-sliding
 
 
         // Dash (Weapon)

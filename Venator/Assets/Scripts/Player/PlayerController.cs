@@ -25,6 +25,7 @@ namespace TarodevController
         public event Action<JumpType> Jumped;
         public event Action<bool, float> GroundedChanged;
         public event Action<bool, Vector2> RollChanged;
+        public event Action<bool, Vector2> SlideChanged;
         //public event Action<bool, Vector2> DashChanged;
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
@@ -179,28 +180,25 @@ namespace TarodevController
         {
             _frameInput = _playerInput.Gather();
 
-
             if (_frameInput.JumpDown)
             {
                 _jumpToConsume = true;
                 _timeJumpWasPressed = _time;
             }
 
-            if (_frameInput.RollDown)
+            if (_frameInput.RollDown) _rollToConsume = true;
+
+            // ⬇️ Allow slide whether grounded or airborne (use a lower/own threshold in air)
+            if (_frameInput.CrouchDown && !_rolling && !_isSliding &&
+                Mathf.Abs(_frameInput.Move.x) > 0.1f)
             {
-                _rollToConsume = true;
+                float minSpeed = _grounded ? Stats.SlideMinStartSpeed : Stats.AirSlideMinStartSpeed; // add this to PlayerStats
+                if (Mathf.Abs(Velocity.x) >= minSpeed) StartSlide();
             }
-            if (_frameInput.CrouchHeld && _grounded && !_rolling && !_isSliding && Mathf.Abs(_frameInput.Move.x) > 0.1f)
-            {
-                StartSlide();
-            }
-            /*
-            if (_frameInput.DashDown)
-            {
-                _dashToConsume = true;
-            }
-            */
+
+            /* if (_frameInput.DashDown) _dashToConsume = true; */
         }
+
 
         #endregion
 
@@ -445,6 +443,13 @@ namespace TarodevController
 
             if (on)
             {
+                if (_isSliding)
+                {
+                    _isSliding = false;
+                    _slideBoostRemaining = 0f;
+                    SlideChanged?.Invoke(false, Vector2.zero);
+                }
+
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
@@ -461,11 +466,12 @@ namespace TarodevController
                     AddFrameForce(new Vector2(0, Stats.WallPopForce), true);
                 }
 
-                ResetAirJumps(); // so that we can air jump even if we didn't leave via a wall jump
+                ResetAirJumps();
             }
 
             WallGrabChanged?.Invoke(on);
         }
+
 
         #endregion
 
@@ -628,6 +634,14 @@ namespace TarodevController
                 float dirX;
                 //Debug.Log($"[Roll] Sprite is facing {(_sprite.flipX ? "left" : "right")}");
 
+                /*
+                if (_isSliding)
+                {
+                    _isSliding = false;
+                    SlideChanged?.Invoke(false, Vector2.zero);
+                }
+                */
+                 
                 if (inputX != 0) //Case 1: player is actively holding an input
                 {
                     dirX = inputX;
@@ -747,7 +761,7 @@ namespace TarodevController
 
         private void ToggleCrouching(bool shouldCrouch)
         {
-            if (_rolling) return;
+            if (_rolling || _isSliding) return;
 
             if (shouldCrouch)
             {
@@ -778,22 +792,40 @@ namespace TarodevController
 
         private bool _isSliding;
         private Vector2 _slideDirection;
+        public bool IsSliding => _isSliding;
+
+        // Smooth boost ramp
+        private float _slideBoostRemaining;   // how much force still to add
+        private float _slideBoostPerSec;      // computed from stats
 
         private void StartSlide()
         {
             if (!Stats.AllowSlide) return;
 
+            // Require horizontal intent
+            if (Mathf.Abs(_frameInput.Move.x) < 0.1f) return;
+
             _isSliding = true;
 
-            // Get input direction (left or right)
+            // Direction from current input
             float dirX = Mathf.Sign(_frameInput.Move.x);
             _slideDirection = new Vector2(dirX, 0);
 
-            // Apply boost instead of setting velocity
-            AddFrameForce(_slideDirection * Stats.SlideBoostForce);
+            SlideChanged?.Invoke(true, _slideDirection);
 
-            SetColliderMode(ColliderMode.Crouching);
+            // Ramp the boost over SlideBoostTime (reuses your existing stats)
+            _slideBoostRemaining = Stats.SlideBoostForce;
+            _slideBoostPerSec = (Stats.SlideBoostTime > 0.001f)
+                ? Stats.SlideBoostForce / Stats.SlideBoostTime
+                : Stats.SlideBoostForce / Time.fixedDeltaTime;
+
+            // Collider while sliding
+            if (_grounded) SetColliderMode(ColliderMode.Crouching);
+            else SetColliderMode(ColliderMode.Airborne);
         }
+
+
+
         #endregion
 
         #region Move
@@ -811,7 +843,8 @@ namespace TarodevController
         {
             IPhysicsMover currentPlatform = null;
 
-            if (_grounded && !IsWithinJumpClearance)
+            // ⬇️ Add "!_isSliding" so we don't nudge Y while sliding
+            if (_grounded && !IsWithinJumpClearance && !_isSliding)
             {
                 // Use transient velocity to keep grounded. Move position is not interpolated
                 var distanceFromGround = _character.StepHeight - _groundHit.distance;
@@ -863,15 +896,6 @@ namespace TarodevController
 
         private void Move()
         {
-            if (_forceToApplyThisFrame != Vector2.zero)
-            {
-                _rb.linearVelocity += AdditionalFrameVelocities();
-                _rb.AddForce(_forceToApplyThisFrame * _rb.mass, ForceMode2D.Impulse);
-
-                // Returning provides the crispest & most accurate jump experience
-                // Required for reliable slope jumps
-                return;
-            }
 
             if (_rolling)
             {
@@ -926,7 +950,66 @@ namespace TarodevController
                 Stats.WallSlideTimer = 0f; // Reset wall slide timer when not on a wall
             }
 
+            if (_isSliding)
+            {
+                // Collider while sliding - always use crouch collider (even in air)
+                SetColliderMode(ColliderMode.Crouching);
 
+                // Entry boost ramp
+                if (_slideBoostRemaining > 0f)
+                {
+                    float addThisFrame = Mathf.Min(_slideBoostRemaining, _slideBoostPerSec * _delta);
+                    AddFrameForce(new Vector2(_slideDirection.x * addThisFrame, 0f));
+                    _slideBoostRemaining -= addThisFrame;
+                }
+
+                // Horizontal glide friction
+                var v = _rb.linearVelocity;
+                v.x *= Mathf.Exp(-Stats.SlideFrictionPerSec * _delta);
+
+                // Grounded: no vertical drift; Air: keep gravity (scaled)
+                if (_grounded)
+                {
+                    _constantForce.force = Vector2.zero;
+                    v.y = 0f;
+                }
+                else
+                {
+                    // keep extra gravity while air-sliding
+                    float gMul = Mathf.Max(0f, Stats.AirSlideGravityMultiplier);
+                    _constantForce.force = new Vector2(
+                        0,
+                        -Stats.ExtraConstantGravity * gMul *
+                        (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1)
+                    ) * _rb.mass;
+                    // do NOT zero v.y in air
+                }
+
+                SetVelocity(v);
+
+                // Exit conditions
+                if (!_frameInput.CrouchHeld)
+                {
+                    _isSliding = false;
+                    _slideBoostRemaining = 0f;
+                    SlideChanged?.Invoke(false, Vector2.zero);
+                    if (_grounded && CanStand) SetColliderMode(ColliderMode.Standard);
+                    else SetColliderMode(ColliderMode.Crouching); // still crouch collider in air
+                }
+                else if (_grounded && Mathf.Abs(v.x) < Stats.SlideToCrouchSpeed)
+                {
+                    _isSliding = false;
+                    _slideBoostRemaining = 0f;
+                    SlideChanged?.Invoke(false, Vector2.zero);
+                    Crouching = true;
+                    SetColliderMode(ColliderMode.Crouching);
+                }
+                else
+                {
+                    // remain in slide this frame
+                    return;
+                }
+            }
 
             if (ClimbingLadder)
             {
@@ -1028,37 +1111,13 @@ namespace TarodevController
                 return _totalTransientVelocityAppliedLastFrame;
             }
 
-            // Slide-to-crouch transition logic
-            if (_isSliding)
+            if (_forceToApplyThisFrame != Vector2.zero)
             {
-                // Check if slide should end
-                float horizontalSpeed = Mathf.Abs(Velocity.x);
-                if (horizontalSpeed < Stats.WalkSpeedThreshold || !_frameInput.CrouchHeld)
-                {
-                    _isSliding = false;
+                _rb.linearVelocity += AdditionalFrameVelocities();
+                _rb.AddForce(_forceToApplyThisFrame * _rb.mass, ForceMode2D.Impulse);
 
-                    if (_grounded)
-                    {
-                        if (CrouchHeld && !CanStand)
-                        {
-                            ToggleCrouching(true); // Stay crouched if head is blocked
-                        }
-                        else if (CrouchHeld)
-                        {
-                            ToggleCrouching(true); // Transition from slide to crouch
-                        }
-                        else
-                        {
-                            ToggleCrouching(false); // Stand up if crouch not held
-                        }
-                    }
-                    else
-                    {
-                        // In air — just stand collider (or stay in crouch if you prefer)
-                        if (CanStand)
-                            SetColliderMode(ColliderMode.Standard);
-                    }
-                }
+                // Returning provides the crispest & most accurate jump experience
+                // Required for reliable slope jumps
             }
 
         }
@@ -1163,6 +1222,7 @@ namespace TarodevController
         public event Action<JumpType> Jumped;
         public event Action<bool, float> GroundedChanged;
         public event Action<bool, Vector2> RollChanged;
+        public event Action<bool, Vector2> SlideChanged;
         //public event Action<bool, Vector2> DashChanged;
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
@@ -1178,6 +1238,7 @@ namespace TarodevController
         public int LastWallDirection { get; }
         public bool ClimbingLadder { get; }
         public bool IsSprinting { get; }
+        public bool IsSliding { get; }
         public bool CanStand { get; }   
 
         // External force
