@@ -690,9 +690,16 @@ namespace TarodevController
                     if (_grounded) _canRoll = true;
 
                     if (CanStand)
+                    {
+                        Crouching = false;
                         SetColliderMode(ColliderMode.Standard);
+                    }
                     else
+                    {
+                        Crouching = true;
                         SetColliderMode(ColliderMode.Crouching);
+                    }
+
                 }
             }
         }
@@ -754,10 +761,34 @@ namespace TarodevController
         private void CalculateCrouch()
         {
             if (!Stats.AllowCrouching) return;
+            if (_rolling || _isSliding) return; // rolling/sliding own the collider
 
-            if (!Crouching && CrouchHeld && _grounded) ToggleCrouching(true);
-            else if (Crouching && (!CrouchHeld || !_grounded)) ToggleCrouching(false);
+            // --- Forced crouch under low ceiling ---
+            if (_grounded && !CanStand)
+            {
+                if (!Crouching)
+                {
+                    Crouching = true;                  // reflect forced crouch in the flag
+                    SetColliderMode(ColliderMode.Crouching);
+                }
+                return; // stay crouched until we have headroom
+            }
+
+            // --- Player-controlled crouch ---
+            if (!Crouching && CrouchHeld && _grounded)
+            {
+                _timeStartedCrouching = _time;
+                Crouching = true;
+                SetColliderMode(ColliderMode.Crouching);
+            }
+            else if (Crouching && (!CrouchHeld || !_grounded))
+            {
+                // We know CanStand is true here (top guard), so we can stand up
+                Crouching = false;
+                SetColliderMode(ColliderMode.Standard);
+            }
         }
+
 
         private void ToggleCrouching(bool shouldCrouch)
         {
@@ -892,7 +923,7 @@ namespace TarodevController
             if (platformVel.y < 0) platformVel.y *= Stats.NegativeYVelocityNegation;
             _decayingTransientVelocity += platformVel;
         }
-        public bool IsSprinting => _frameInput.SprintHeld && _hasInputThisFrame && !_isOnWall && !ClimbingLadder && !_rolling && !Crouching;
+        public bool IsSprinting => _frameInput.SprintHeld && _hasInputThisFrame && !_isOnWall && !ClimbingLadder && !_rolling && !_isSliding && !Crouching;
 
         private void Move()
         {
@@ -993,8 +1024,17 @@ namespace TarodevController
                     _isSliding = false;
                     _slideBoostRemaining = 0f;
                     SlideChanged?.Invoke(false, Vector2.zero);
-                    if (_grounded && CanStand) SetColliderMode(ColliderMode.Standard);
-                    else SetColliderMode(ColliderMode.Crouching); // still crouch collider in air
+                    if (_grounded && CanStand)
+                    {
+                        Crouching = false;
+                        SetColliderMode(ColliderMode.Standard);
+                    }
+                    else
+                    {
+                        Crouching = true; // forced crouch under ceiling
+                        SetColliderMode(ColliderMode.Crouching);
+                    }
+
                 }
                 else if (_grounded && Mathf.Abs(v.x) < Stats.SlideToCrouchSpeed)
                 {
