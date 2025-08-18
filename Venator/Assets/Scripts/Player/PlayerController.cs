@@ -548,21 +548,53 @@ namespace TarodevController
         private bool CanAirJump => !_grounded && _airJumpsRemaining > 0;
         private bool CanWallJump => !_grounded && (_isOnWall || _wallDirThisFrame != 0) || (_wallJumpCoyoteUsable && _time < _timeLeftWall + Stats.WallCoyoteTime);
 
+        // --- JUMP ---
         private void CalculateJump()
         {
-            if ((_jumpToConsume || HasBufferedJump) && CanStand)
+            // If jump was pressed (or buffered), and we have headroom
+            bool wantJump = _jumpToConsume || HasBufferedJump;
+            if (wantJump && CanStand)
             {
+                // If we are in an ability that "owns" movement, cancel it first
+                if (_isSliding) CancelSlideForJump();
+                if (_rolling) CancelRollForJump();
+
+                // Now decide which jump to execute (your original logic)
                 if (CanWallJump) ExecuteJump(JumpType.WallJump);
                 else if (_grounded || ClimbingLadder) ExecuteJump(JumpType.Jump);
                 else if (CanUseCoyote) ExecuteJump(JumpType.Coyote);
                 else if (CanAirJump) ExecuteJump(JumpType.AirJump);
             }
 
-            if ((!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && Velocity.y > 0) || Velocity.y < 0) _endedJumpEarly = true; // Early end detection
+            // Early end detection (unchanged)
+            if ((!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && Velocity.y > 0) || Velocity.y < 0)
+                _endedJumpEarly = true;
 
-
-            if (_time > _returnWallInputLossAfter) _wallJumpInputNerfPoint = Mathf.MoveTowards(_wallJumpInputNerfPoint, 1, _delta / Stats.WallJumpInputLossReturnTime);
+            if (_time > _returnWallInputLossAfter)
+                _wallJumpInputNerfPoint = Mathf.MoveTowards(_wallJumpInputNerfPoint, 1, _delta / Stats.WallJumpInputLossReturnTime);
         }
+
+        // Cancel slide immediately so Move() doesn't early-return from the slide block
+        private void CancelSlideForJump()
+        {
+            _isSliding = false;
+            _slideBoostRemaining = 0f;
+            SlideChanged?.Invoke(false, Vector2.zero);
+
+            // We'll be airborne right after jump; use Airborne collider shape
+            SetColliderMode(ColliderMode.Airborne);
+        }
+
+        // Cancel roll immediately, but DO NOT apply the "roll end multiplier" – keep momentum
+        private void CancelRollForJump()
+        {
+            _rolling = false;
+            RollChanged?.Invoke(false, Vector2.zero);
+
+            // Going to be airborne from the jump
+            SetColliderMode(ColliderMode.Airborne);
+        }
+
 
         private void ExecuteJump(JumpType jumpType)
         {
@@ -621,6 +653,7 @@ namespace TarodevController
         private bool _rolling;
         private float _startedRolling;
         private float _nextRollTime;
+        private int _lastRollDirX;
 
         private void CalculateRoll()
         {
@@ -632,41 +665,15 @@ namespace TarodevController
                 float inputX = Mathf.Abs(inputXRaw) > 0.01f ? Mathf.Sign(inputXRaw) : 0;
 
                 float dirX;
-                //Debug.Log($"[Roll] Sprite is facing {(_sprite.flipX ? "left" : "right")}");
-
-                /*
-                if (_isSliding)
-                {
-                    _isSliding = false;
-                    SlideChanged?.Invoke(false, Vector2.zero);
-                }
-                */
-                 
-                if (inputX != 0) //Case 1: player is actively holding an input
-                {
-                    dirX = inputX;
-                    //Debug.Log($"[Roll] Case 1: Input held � dirX = {dirX}");
-                }
-                else if (_grounded) //Case 2: player is grounded and not holding an input
-                {
-                    dirX = _sprite.flipX ? -1f : 1f;
-                    //Debug.Log($"[Roll] Case 2: Grounded, no input � facing dirX = {dirX}");
-                }
+                if (inputX != 0) dirX = inputX; //if there is an input, use it
+                else if (_grounded) dirX = _sprite.flipX ? -1f : 1f;
                 else
                 {
                     float velocityX = Velocity.x;
-
-                    if (Mathf.Abs(velocityX) > Stats.MinAirMovementForDirectionalRoll) //Case 3: if the player is still moving horizontally in the air
-                    {
-                        dirX = Mathf.Sign(velocityX);
-                        //Debug.Log($"[Roll] Case 3: Airborne with momentum � dirX = {dirX}");
-                    }
-                    else // Case 4: if player is in the air without input or movement
-                    {
-                        dirX = _sprite.flipX ? -1f : 1f;
-                        //Debug.Log($"[Roll] Case 4: Airborne with no momentum � facing dirX = {dirX}");
-                    }
+                    dirX = (Mathf.Abs(velocityX) > Stats.MinAirMovementForDirectionalRoll) ? Mathf.Sign(velocityX) : (_sprite.flipX ? -1f : 1f);
                 }
+
+                _lastRollDirX = (int)dirX; // remember roll direction
 
                 _rollVel = new Vector2(Velocity.x + (Stats.RollBoostForce * dirX), Velocity.y);
 
@@ -689,6 +696,20 @@ namespace TarodevController
                     SetVelocity(new Vector2(Velocity.x * Stats.RollEndHorizontalMultiplier, Velocity.y));
                     if (_grounded) _canRoll = true;
 
+                    // If we're still sliding, flip the slide to the roll direction
+                    if (_isSliding)
+                    {
+                        _slideDirection = new Vector2(_lastRollDirX, 0);
+
+                        // Flip the current horizontal velocity to match the new slide direction
+                        var v2 = Velocity;
+                        v2.x = Mathf.Abs(v2.x) * _lastRollDirX;
+                        SetVelocity(v2);
+
+                        // Tell the animator the slide's direction changed (still sliding = true)
+                        SlideChanged?.Invoke(true, _slideDirection);
+                    }
+
                     if (CanStand)
                     {
                         Crouching = false;
@@ -699,9 +720,9 @@ namespace TarodevController
                         Crouching = true;
                         SetColliderMode(ColliderMode.Crouching);
                     }
-
                 }
             }
+
         }
 
         #endregion

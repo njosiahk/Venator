@@ -288,7 +288,14 @@ namespace TarodevController
         */
         private void HandleSpriteFlip(float xInput)
         {
-            // Freeze facing during slide
+            // While rolling, face the roll direction
+            if (_anim.GetBool(RollKey))
+            {
+                _sprite.flipX = _rollFacingLeft;
+                return;
+            }
+
+            // While sliding (and not rolling), keep the slide lock
             if (_lockFacingDuringSlide)
             {
                 _sprite.flipX = _slideFacingLeft;
@@ -297,11 +304,10 @@ namespace TarodevController
 
             if (_flipLockoutTimer > 0f) return; // no flipping during lockout
 
-            if (_isOnWall && !_grounded)
-                _sprite.flipX = _player.WallDirection > 0;
-            else if (xInput != 0)
-                _sprite.flipX = xInput < 0;
+            if (_isOnWall && !_grounded) _sprite.flipX = _player.WallDirection > 0;
+            else if (xInput != 0) _sprite.flipX = xInput < 0;
         }
+
 
 
         private bool _rollCompleted;
@@ -512,7 +518,12 @@ namespace TarodevController
 
             if (rolling)
             {
-                // enter roll visuals
+                // Roll takes over facing
+                _rollFacingLeft = dir.x < 0;
+
+                // Disable slide lock during the roll so roll can control facing
+                _lockFacingDuringSlide = false;
+
                 _anim.SetBool(CrouchKey, true);
                 _rollParticles.Play();
                 _rollRingTransform.up = dir;
@@ -521,19 +532,32 @@ namespace TarodevController
             }
             else
             {
-                // exit roll visuals
                 _rollParticles.Stop();
 
-                // let normal crouch logic take over
-                // only clear crouch if we actually CAN stand and the controller isn't still crouching
-                if (_player.CanStand && !_player.Crouching)
-                    _anim.SetBool(CrouchKey, false);
+                // If we're still sliding after the roll, lock slide facing to the roll direction
+                if (_player.IsSliding)
+                {
+                    _slideFacingLeft = _rollFacingLeft;
+                    _lockFacingDuringSlide = true;
+                    _sprite.flipX = _slideFacingLeft; // apply immediately
+                }
+                else
+                {
+                    // Not sliding anymore: normal crouch/stand visuals
+                    if (_player.CanStand && !_player.Crouching)
+                        _anim.SetBool(CrouchKey, false);
+                }
             }
         }
 
+
+
         // Lock facing while sliding
+        // Facing locks
         private bool _lockFacingDuringSlide;
         private bool _slideFacingLeft;
+        private bool _rollFacingLeft;
+
 
         private void OnSlideChanged(bool sliding, Vector2 dir)
         {
@@ -541,7 +565,7 @@ namespace TarodevController
 
             if (sliding)
             {
-                // lock current facing for the duration of the slide
+                // lock current facing using slide direction if provided
                 if (Mathf.Abs(dir.x) > 0.01f) _sprite.flipX = dir.x < 0;
                 _slideFacingLeft = _sprite.flipX;
                 _lockFacingDuringSlide = true;
