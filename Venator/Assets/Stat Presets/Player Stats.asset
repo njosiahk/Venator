@@ -40,6 +40,7 @@ MonoBehaviour:
   JumpPower: 14
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
+  AirJumpLockoutAfterWallJump: 0.15
   AllowRoll: 1
   RollBoostForce: 20
   RollDuration: 0.1
@@ -47,7 +48,7 @@ MonoBehaviour:
   RollEndHorizontalMultiplier: 0.8
   MinAirMovementForDirectionalRoll: 0.01
   AllowSlide: 1
-  SlideMinStartSpeed: 5
+  SlideMinStartSpeed: 6
   SlideBoostForce: 8
   SlideBoostTime: 0.12
   SlideFrictionPerSec: 0.75

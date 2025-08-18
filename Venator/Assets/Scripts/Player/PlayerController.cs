@@ -320,6 +320,7 @@ namespace TarodevController
             if (grounded)
             {
                 GroundedChanged?.Invoke(true, _lastFrameY);
+                _airJumpAvailableAt = 0f;
                 _rb.gravityScale = 0;
                 SetVelocity(_trimmedFrameVelocity);
                 _constantForce.force = Vector2.zero;
@@ -534,8 +535,8 @@ namespace TarodevController
         private float _timeJumpWasPressed;
         private Vector2 _forceToApplyThisFrame;
         private bool _endedJumpEarly;
-        private float _endedJumpForce;
         private int _airJumpsRemaining;
+        private float _airJumpAvailableAt;
         private bool _wallJumpCoyoteUsable;
         private bool _coyoteUsable;
         private float _timeLeftGrounded;
@@ -545,7 +546,7 @@ namespace TarodevController
 
         private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + Stats.BufferedJumpTime && !IsWithinJumpClearance;
         private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _timeLeftGrounded + Stats.CoyoteTime;
-        private bool CanAirJump => !_grounded && _airJumpsRemaining > 0;
+        private bool CanAirJump => !_grounded && _airJumpsRemaining > 0 && _time >= _airJumpAvailableAt;
         private bool CanWallJump => !_grounded && (_isOnWall || _wallDirThisFrame != 0) || (_wallJumpCoyoteUsable && _time < _timeLeftWall + Stats.WallCoyoteTime);
 
         // --- JUMP ---
@@ -623,19 +624,17 @@ namespace TarodevController
                 _wallJumpInputNerfPoint = 0;
                 _returnWallInputLossAfter = _time + Stats.WallJumpTotalInputLossTime;
                 _wallDirectionForJump = _wallDirThisFrame;
-                if (_wallDirThisFrame != 0)
-                    WallDirection = _wallDirThisFrame;
+                if (_wallDirThisFrame != 0) WallDirection = _wallDirThisFrame;
 
                 _lastWallDirection = _wallDirThisFrame;
 
                 if (_isOnWall || IsPushingAgainstWall)
-                {
                     AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallJumpPower);
-                }
                 else
-                {
                     AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallPushPower);
-                }
+
+                // <-- NEW: prevent instant double jump after a wall jump
+                _airJumpAvailableAt = _time + Stats.AirJumpLockoutAfterWallJump;
             }
 
             Jumped?.Invoke(jumpType);

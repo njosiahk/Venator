@@ -482,6 +482,7 @@ namespace TarodevController
             }
             else if (type is JumpType.AirJump)
             {
+                _anim.SetTrigger(DoubleJumpKey);
                 _source.PlayOneShot(_doubleJumpClip);
                 _doubleJumpParticles.Play();
             }
@@ -665,6 +666,7 @@ namespace TarodevController
         private static readonly int WallSlideKey = Animator.StringToHash("WallSliding");
         private static readonly int RollKey = Animator.StringToHash("Rolling");
         private static readonly int SlideKey = Animator.StringToHash("Sliding");
+        private static readonly int DoubleJumpKey = Animator.StringToHash("DoubleJump");
         //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         //private static readonly int JumpKey = Animator.StringToHash("Jump");
 

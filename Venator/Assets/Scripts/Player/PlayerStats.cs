@@ -39,6 +39,7 @@ namespace TarodevController
         public float JumpPower = 20;
         public float EndJumpEarlyExtraForceMultiplier = 3;
         public int MaxAirJumps = 1;
+        public float AirJumpLockoutAfterWallJump = 0.08f;  // 60–120ms feels good
 
         // Roll
         [Header("Roll"), Space] public bool AllowRoll = true;
