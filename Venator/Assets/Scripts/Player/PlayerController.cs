@@ -870,9 +870,12 @@ namespace TarodevController
                 ? Stats.SlideBoostForce / Stats.SlideBoostTime
                 : Stats.SlideBoostForce / Time.fixedDeltaTime;
 
-            // Collider while sliding
-            if (_grounded) SetColliderMode(ColliderMode.Crouching);
-            else SetColliderMode(ColliderMode.Airborne);
+            float instant = Mathf.Min(_slideBoostRemaining, _slideBoostPerSec * Time.fixedDeltaTime * 3f);
+            if (instant > 0f)
+            {
+                AddFrameForce(new Vector2(_slideDirection.x * instant, 0f));
+                _slideBoostRemaining -= instant;
+            }
         }
 
 
@@ -1003,10 +1006,10 @@ namespace TarodevController
 
             if (_isSliding)
             {
-                // Collider while sliding - always use crouch collider (even in air)
+                // Always use crouch collider while sliding (even in air)
                 SetColliderMode(ColliderMode.Crouching);
 
-                // Entry boost ramp
+                // Entry boost ramp (spread over time using existing stats)
                 if (_slideBoostRemaining > 0f)
                 {
                     float addThisFrame = Mathf.Min(_slideBoostRemaining, _slideBoostPerSec * _delta);
@@ -1018,7 +1021,7 @@ namespace TarodevController
                 var v = _rb.linearVelocity;
                 v.x *= Mathf.Exp(-Stats.SlideFrictionPerSec * _delta);
 
-                // Grounded: no vertical drift; Air: keep gravity (scaled)
+                // Grounded: pin vertical; Air: keep gravity (scaled)
                 if (_grounded)
                 {
                     _constantForce.force = Vector2.zero;
@@ -1026,14 +1029,12 @@ namespace TarodevController
                 }
                 else
                 {
-                    // keep extra gravity while air-sliding
                     float gMul = Mathf.Max(0f, Stats.AirSlideGravityMultiplier);
                     _constantForce.force = new Vector2(
                         0,
                         -Stats.ExtraConstantGravity * gMul *
                         (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1)
                     ) * _rb.mass;
-                    // do NOT zero v.y in air
                 }
 
                 SetVelocity(v);
@@ -1044,17 +1045,9 @@ namespace TarodevController
                     _isSliding = false;
                     _slideBoostRemaining = 0f;
                     SlideChanged?.Invoke(false, Vector2.zero);
-                    if (_grounded && CanStand)
-                    {
-                        Crouching = false;
-                        SetColliderMode(ColliderMode.Standard);
-                    }
-                    else
-                    {
-                        Crouching = true; // forced crouch under ceiling
-                        SetColliderMode(ColliderMode.Crouching);
-                    }
-
+                    if (_grounded && CanStand) { Crouching = false; SetColliderMode(ColliderMode.Standard); }
+                    else { Crouching = true; SetColliderMode(ColliderMode.Crouching); }
+                    // fall through so the impulse (if any) is applied at the bottom of Move()
                 }
                 else if (_grounded && Mathf.Abs(v.x) < Stats.SlideToCrouchSpeed)
                 {
@@ -1063,10 +1056,16 @@ namespace TarodevController
                     SlideChanged?.Invoke(false, Vector2.zero);
                     Crouching = true;
                     SetColliderMode(ColliderMode.Crouching);
+                    // fall through so the impulse (if any) is applied at the bottom of Move()
                 }
                 else
                 {
-                    // remain in slide this frame
+                    // Stay in slide this frame → apply the queued impulse here (we return after)
+                    if (_forceToApplyThisFrame != Vector2.zero)
+                    {
+                        _rb.linearVelocity += AdditionalFrameVelocities();
+                        _rb.AddForce(_forceToApplyThisFrame * _rb.mass, ForceMode2D.Impulse);
+                    }
                     return;
                 }
             }
