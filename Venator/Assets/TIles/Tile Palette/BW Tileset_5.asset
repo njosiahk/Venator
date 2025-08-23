@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: BW Tileset_5
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1350164594, guid: dcc2779d7eaaf5f4495fb792491dc383, type: 3}
+  m_Sprite: {fileID: 184985919, guid: 827805b3fe9565e48b67b84d8692bf20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

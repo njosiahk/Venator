@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -160,177 +160,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player katana run 48x48_0
+      name: Player Katana Run 48x48_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 05c8b4360b29e3cd0800000000000000
-      internalID: -2576460650531550128
+      spriteID: f8613d41ce3cec84583d88be38993e24
+      internalID: 1633453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_1
+      name: Player Katana Run 48x48_1
       rect:
         serializedVersion: 2
         x: 48
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a3e7524c409cbd540800000000000000
-      internalID: 5033838030824504890
+      spriteID: a50ae21b4634d9e4c8346835c625c0ae
+      internalID: 83138342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_2
+      name: Player Katana Run 48x48_2
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d6e63130a3b8a4da0800000000000000
-      internalID: -5959798075595461011
+      spriteID: ce396b3cbb8e11744b68ea0ddd3eef81
+      internalID: 1208109246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_3
+      name: Player Katana Run 48x48_3
       rect:
         serializedVersion: 2
         x: 144
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: eaa445cec855025b0800000000000000
-      internalID: -5395218289841124690
+      spriteID: 0d9ec3ed0e73b594681c447302f0c3ea
+      internalID: -932192098
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_4
+      name: Player Katana Run 48x48_4
       rect:
         serializedVersion: 2
         x: 192
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c8aae2bf2e12359b0800000000000000
-      internalID: -5092689494865433972
+      spriteID: c7316c964ba140d4883f4940efb5f4dd
+      internalID: 250663214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_5
+      name: Player Katana Run 48x48_5
       rect:
         serializedVersion: 2
         x: 240
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 932412590ff7b6fb0800000000000000
-      internalID: -4653485118686412231
+      spriteID: 6f03472807b5de04aaa579f370e4641a
+      internalID: 1691577963
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_6
+      name: Player Katana Run 48x48_6
       rect:
         serializedVersion: 2
         x: 288
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c4d81c942f9961100800000000000000
-      internalID: 78419309424119116
+      spriteID: 1ff2260d797f1a84da3f5fb437c0efc1
+      internalID: 1777779888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player katana run 48x48_7
+      name: Player Katana Run 48x48_7
       rect:
         serializedVersion: 2
         x: 336
         y: 0
         width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f897973c7b700c880800000000000000
-      internalID: -8592859603182978673
+      spriteID: fd5ce3e6d260e0b4082660a9d6d6ebb2
+      internalID: -689544125
       vertices: []
       indices: 
       edges: []
@@ -351,16 +351,16 @@ TextureImporter:
       - key: SpriteEditor.SliceOnImport
         value: True
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.1666666716337204},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":1,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      player katana run 48x48_0: -2576460650531550128
-      player katana run 48x48_1: 5033838030824504890
-      player katana run 48x48_2: -5959798075595461011
-      player katana run 48x48_3: -5395218289841124690
-      player katana run 48x48_4: -5092689494865433972
-      player katana run 48x48_5: -4653485118686412231
-      player katana run 48x48_6: 78419309424119116
-      player katana run 48x48_7: -8592859603182978673
+      Player Katana Run 48x48_0: 1633453
+      Player Katana Run 48x48_1: 83138342
+      Player Katana Run 48x48_2: 1208109246
+      Player Katana Run 48x48_3: -932192098
+      Player Katana Run 48x48_4: 250663214
+      Player Katana Run 48x48_5: 1691577963
+      Player Katana Run 48x48_6: 1777779888
+      Player Katana Run 48x48_7: -689544125
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,37 @@
 fileFormatVersion: 2
-guid: dcc2779d7eaaf5f4495fb792491dc383
+guid: b279b58ef89abea428b5f293b6fe8b95
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6157058115722614670
-    second: BW Tileset_0
+      213: -3478019811509702237
+    second: Player Punch Cross 64x64_0
+  - first:
+      213: -9027997249275329682
+    second: Player Punch Cross 64x64_1
+  - first:
+      213: -3883414527870476205
+    second: Player Punch Cross 64x64_2
+  - first:
+      213: 8889319545137206078
+    second: Player Punch Cross 64x64_3
+  - first:
+      213: -5523492385490000993
+    second: Player Punch Cross 64x64_4
+  - first:
+      213: 5396370504654771824
+    second: Player Punch Cross 64x64_5
+  - first:
+      213: -8037071679433020297
+    second: Player Punch Cross 64x64_6
+  - first:
+      213: 2808273349627430583
+    second: Player Punch Cross 64x64_7
+  - first:
+      213: 4325490824847436267
+    second: Player Punch Cross 64x64_8
+  - first:
+      213: -8331880707780287953
+    second: Player Punch Cross 64x64_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +78,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,287 +166,155 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BW Tileset_0
+      name: Player Punch Cross 64x64_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8715191cb3427550800000000000000
-      internalID: 6157058115722614670
+      spriteID: 3a17135a8679bbfc0800000000000000
+      internalID: -3478019811509702237
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW Tileset_1
+      name: Player Punch Cross 64x64_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 192
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d89a494ac20bce48ae2bf2933e900df
-      internalID: 1855568212
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 144
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ecec6ad3fc8ba714dbf53629e5130fa3
-      internalID: 1919414566
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 144
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cdab39e1a1ce55346a2544d260f47c03
-      internalID: -1568441794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72e2ed16af1d802469524e637292dcd4
-      internalID: -957162632
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_5
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ca63e295f106404baa672b7adc38a4d
-      internalID: 1350164594
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_6
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3571db42cdec23946bdce971ce179ee6
-      internalID: 117500137
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_7
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75cf96166b0649945a32f4aebf707917
-      internalID: -1121365737
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_8
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2bf425662b76724bb4888ff58fe264a
-      internalID: 475468151
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_9
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab80d5e95c3bb90439d586b811a077db
-      internalID: -730257047
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BW Tileset_10
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 64
         y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5157cad54be469d419ab6638a67c5abc
-      internalID: -2024311462
+      spriteID: e638dbb855c16b280800000000000000
+      internalID: -9027997249275329682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW Tileset_11
+      name: Player Punch Cross 64x64_2
       rect:
         serializedVersion: 2
-        x: 48
+        x: 128
         y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 463e30650417fca4395613fe3e1441bc
-      internalID: 1174943880
+      spriteID: 35060b6ef075b1ac0800000000000000
+      internalID: -3883414527870476205
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW Tileset_12
+      name: Player Punch Cross 64x64_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 192
         y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 3fd8c2994a15bec4d8268566492e45e6
-      internalID: 770617478
+      spriteID: e3317d657053d5b70800000000000000
+      internalID: 8889319545137206078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Punch Cross 64x64_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f932b4ba0fc9853b0800000000000000
+      internalID: -5523492385490000993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Punch Cross 64x64_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076d75ef162c3ea40800000000000000
+      internalID: 5396370504654771824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Punch Cross 64x64_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77cea09c3e5967090800000000000000
+      internalID: -8037071679433020297
       vertices: []
       indices: 
       edges: []
@@ -428,7 +323,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 89b213f5668b854448738d8e68776260
+    spriteID: b2eb9738b8e96d9439111ea92d9502eb
     internalID: 0
     vertices: []
     indices: 
@@ -438,21 +333,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.25},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":1,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      BW Tileset_0: 6157058115722614670
-      BW Tileset_1: 1855568212
-      BW Tileset_10: -2024311462
-      BW Tileset_11: 1174943880
-      BW Tileset_12: 770617478
-      BW Tileset_2: 1919414566
-      BW Tileset_3: -1568441794
-      BW Tileset_4: -957162632
-      BW Tileset_5: 1350164594
-      BW Tileset_6: 117500137
-      BW Tileset_7: -1121365737
-      BW Tileset_8: 475468151
-      BW Tileset_9: -730257047
+      Player Punch Cross 64x64_0: -3478019811509702237
+      Player Punch Cross 64x64_1: -9027997249275329682
+      Player Punch Cross 64x64_2: -3883414527870476205
+      Player Punch Cross 64x64_3: 8889319545137206078
+      Player Punch Cross 64x64_4: -5523492385490000993
+      Player Punch Cross 64x64_5: 5396370504654771824
+      Player Punch Cross 64x64_6: -8037071679433020297
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
