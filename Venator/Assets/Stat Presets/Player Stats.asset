@@ -19,15 +19,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 321
   CharacterSize:
-    Height: 1.1
-    Width: 0.5
+    Height: 1.4
+    Width: 0.7
     StepHeight: 0.2
-    CrouchHeight: 0.8
+    CrouchHeight: 0.9
     RayInset: 0.01
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
   PositionCorrectionMode: 0
-  BaseSpeed: 5
+  BaseSpeed: 8
   Acceleration: 100
   Friction: 90
   AirFrictionMultiplier: 0.35
@@ -36,22 +36,22 @@ MonoBehaviour:
   SprintSpeedMultiplier: 2.1
   ExtraConstantGravity: 40
   BufferedJumpTime: 0.15
-  CoyoteTime: 0.05
-  JumpPower: 14
+  CoyoteTime: 0.04
+  JumpPower: 16
   EndJumpEarlyExtraForceMultiplier: 3
   MaxAirJumps: 1
   AirJumpLockoutAfterWallJump: 0.15
   AllowRoll: 1
-  RollBoostForce: 20
+  RollBoostForce: 25
   RollDuration: 0.1
   RollCooldown: 1
   RollEndHorizontalMultiplier: 0.8
   MinAirMovementForDirectionalRoll: 0.01
   AllowSlide: 1
-  SlideMinStartSpeed: 5
-  SlideBoostForce: 7.5
+  SlideMinStartSpeed: 10
+  SlideBoostForce: 4
   SlideBoostTime: 0.12
-  SlideFrictionPerSec: 0.75
+  SlideFrictionPerSec: 1
   SlideToCrouchSpeed: 1.8
   AirSlideMinStartSpeed: 5
   AirSlideGravityMultiplier: 0.5
@@ -78,7 +78,7 @@ MonoBehaviour:
   WallPopForce: 12
   WallCoyoteTime: 0.3
   WallDetectorRange: 0.2
-  AllowLadders: 1
+  AllowLadders: 0
   LadderCooldownTime: 0.15
   AutoAttachToLadders: 1
   SnapToLadders: 1
