@@ -19810,9 +19810,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3054942120541986095}
   - component: {fileID: 3054942120541986090}
+  - component: {fileID: 7049848213416915439}
   - component: {fileID: 3054942120541986088}
   - component: {fileID: 537198729}
   - component: {fileID: 5731089695359280883}
+  - component: {fileID: 7085655258471289910}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -19852,6 +19854,19 @@ MonoBehaviour:
   _verticalInputCacheDuration: 0.2
   <Stats>k__BackingField: {fileID: 11400000, guid: 894dfe33661263b42a8e1490d64c0424, type: 2}
   _drawGizmos: 0
+--- !u!114 &7049848213416915439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054942120541986084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce16c430103ca841bbad81e2db686f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
 --- !u!50 &3054942120541986088
 Rigidbody2D:
   serializedVersion: 5
@@ -19962,6 +19977,29 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.7}
   m_Size: {x: 0.65999997, y: 1.36}
   m_Direction: 0
+--- !u!114 &7085655258471289910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054942120541986084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666546bd026b3eb438fbcfdc4e86583e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  attackAction: {fileID: -2854101731810138056, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  moveAction: {fileID: 2389716264467252443, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  range: 2
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  referenceCollider: {fileID: 0}
+  sprite: {fileID: 3054942120714206837}
+  facingTransform: {fileID: 0}
+  flipXFacesLeft: 1
+  attackOriginOffset: {x: 0.6, y: 0.9}
 --- !u!1 &3054942120628204824
 GameObject:
   m_ObjectHideFlags: 0
@@ -20089,7 +20127,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

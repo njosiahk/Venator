@@ -1,37 +1,43 @@
 fileFormatVersion: 2
-guid: b279b58ef89abea428b5f293b6fe8b95
+guid: 438621cd2b6c91048af1b161ed60a6b2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3478019811509702237
-    second: Player Punch Cross 64x64_0
+      213: -3265511694173517792
+    second: Player Punch 64x64_0
   - first:
-      213: -9027997249275329682
-    second: Player Punch Cross 64x64_1
+      213: -5958394551721289882
+    second: Player Punch 64x64_1
   - first:
-      213: -3883414527870476205
-    second: Player Punch Cross 64x64_2
+      213: 4648443667726022596
+    second: Player Punch 64x64_2
   - first:
-      213: 8889319545137206078
-    second: Player Punch Cross 64x64_3
+      213: 7906255216823545266
+    second: Player Punch 64x64_3
   - first:
-      213: -5523492385490000993
-    second: Player Punch Cross 64x64_4
+      213: -5437086216529083779
+    second: Player Punch 64x64_4
   - first:
-      213: 5396370504654771824
-    second: Player Punch Cross 64x64_5
+      213: -2093828169686684309
+    second: Player Punch 64x64_5
   - first:
-      213: -8037071679433020297
-    second: Player Punch Cross 64x64_6
+      213: 2760074175503823497
+    second: Player Punch 64x64_6
   - first:
-      213: 2808273349627430583
-    second: Player Punch Cross 64x64_7
+      213: 3628804719239001658
+    second: Player Punch 64x64_7
   - first:
-      213: 4325490824847436267
-    second: Player Punch Cross 64x64_8
+      213: 7137891975270234453
+    second: Player Punch 64x64_8
   - first:
-      213: -8331880707780287953
-    second: Player Punch Cross 64x64_9
+      213: 5625896990181949946
+    second: Player Punch 64x64_9
+  - first:
+      213: -3448787175358288976
+    second: Player Punch 64x64_10
+  - first:
+      213: 418967443538332138
+    second: Player Punch 64x64_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -166,7 +172,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_0
+      name: Player Punch 64x64_0
       rect:
         serializedVersion: 2
         x: 0
@@ -181,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a17135a8679bbfc0800000000000000
-      internalID: -3478019811509702237
+      spriteID: 02847e26a629ea2d0800000000000000
+      internalID: -3265511694173517792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_1
+      name: Player Punch 64x64_1
       rect:
         serializedVersion: 2
         x: 64
@@ -203,14 +209,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e638dbb855c16b280800000000000000
-      internalID: -9027997249275329682
+      spriteID: 667970169b78f4da0800000000000000
+      internalID: -5958394551721289882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_2
+      name: Player Punch 64x64_2
       rect:
         serializedVersion: 2
         x: 128
@@ -225,14 +231,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35060b6ef075b1ac0800000000000000
-      internalID: -3883414527870476205
+      spriteID: 4c7393523e6928040800000000000000
+      internalID: 4648443667726022596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_3
+      name: Player Punch 64x64_3
       rect:
         serializedVersion: 2
         x: 192
@@ -247,14 +253,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3317d657053d5b70800000000000000
-      internalID: 8889319545137206078
+      spriteID: 2bda8560b39a8bd60800000000000000
+      internalID: 7906255216823545266
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_4
+      name: Player Punch 64x64_4
       rect:
         serializedVersion: 2
         x: 256
@@ -269,14 +275,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f932b4ba0fc9853b0800000000000000
-      internalID: -5523492385490000993
+      spriteID: d728c9a94e69b84b0800000000000000
+      internalID: -5437086216529083779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_5
+      name: Player Punch 64x64_5
       rect:
         serializedVersion: 2
         x: 320
@@ -291,14 +297,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 076d75ef162c3ea40800000000000000
-      internalID: 5396370504654771824
+      spriteID: b6d6e1d8f5a31f2e0800000000000000
+      internalID: -2093828169686684309
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Punch Cross 64x64_6
+      name: Player Punch 64x64_6
       rect:
         serializedVersion: 2
         x: 384
@@ -313,8 +319,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 77cea09c3e5967090800000000000000
-      internalID: -8037071679433020297
+      spriteID: 98272a0d6d0cd4620800000000000000
+      internalID: 2760074175503823497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Punch 64x64_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3670897aaa1c5230800000000000000
+      internalID: 3628804719239001658
       vertices: []
       indices: 
       edges: []
@@ -323,7 +351,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b2eb9738b8e96d9439111ea92d9502eb
+    spriteID: 4b445d33440b9da41b5abcae33b2038f
     internalID: 0
     vertices: []
     indices: 
@@ -335,13 +363,14 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.25},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":1,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Player Punch Cross 64x64_0: -3478019811509702237
-      Player Punch Cross 64x64_1: -9027997249275329682
-      Player Punch Cross 64x64_2: -3883414527870476205
-      Player Punch Cross 64x64_3: 8889319545137206078
-      Player Punch Cross 64x64_4: -5523492385490000993
-      Player Punch Cross 64x64_5: 5396370504654771824
-      Player Punch Cross 64x64_6: -8037071679433020297
+      Player Punch 64x64_0: -3265511694173517792
+      Player Punch 64x64_1: -5958394551721289882
+      Player Punch 64x64_2: 4648443667726022596
+      Player Punch 64x64_3: 7906255216823545266
+      Player Punch 64x64_4: -5437086216529083779
+      Player Punch 64x64_5: -2093828169686684309
+      Player Punch 64x64_6: 2760074175503823497
+      Player Punch 64x64_7: 3628804719239001658
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
