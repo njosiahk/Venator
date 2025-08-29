@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3a7f5e2e0ca165c409642e33a04004c1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - attackAction: {fileID: -2854101731810138056, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  - moveAction: {fileID: 2389716264467252443, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  - sprite: {instanceID: 0}
+  - facingTransform: {instanceID: 0}
+  - weapon: {instanceID: 0}
+  - referenceCollider: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

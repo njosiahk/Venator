@@ -67,7 +67,8 @@ namespace Combat
         Charged = 1 << 0, // held melee
         Boosted = 1 << 1, // boosted throw etc.
         Reflected = 1 << 2, // projectile was reflected
-        Overkill = 1 << 3  // set by defender on lethal if rule matched
+        Overkill = 1 << 3,  // set by defender on lethal if rule matched
+        Perfect = 1 << 4 // perfect charged attack
         // (Add future tags here)
     }
 

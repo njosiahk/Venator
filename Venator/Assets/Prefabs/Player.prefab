@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1969292109115252591}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4510597356752238083}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Roll Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 3054942119778330325}
   - component: {fileID: 3054942119778330331}
   - component: {fileID: 3054942119778330324}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Double Jump Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4969,7 +4969,7 @@ GameObject:
   - component: {fileID: 3054942119837435223}
   - component: {fileID: 3054942119837435221}
   - component: {fileID: 3054942119837435222}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Move Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9805,7 +9805,7 @@ GameObject:
   - component: {fileID: 3054942119893454497}
   - component: {fileID: 3054942119893454503}
   - component: {fileID: 3054942119893454496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Jump Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14700,7 +14700,7 @@ GameObject:
   - component: {fileID: 3054942120025842299}
   - component: {fileID: 3054942120025842297}
   - component: {fileID: 3054942120025842298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DashRing Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19592,7 +19592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3054942120045712701}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Dash Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19626,7 +19626,7 @@ GameObject:
   - component: {fileID: 3054942120376258708}
   - component: {fileID: 3054942120376258714}
   - component: {fileID: 3054942120376258713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19814,8 +19814,7 @@ GameObject:
   - component: {fileID: 3054942120541986088}
   - component: {fileID: 537198729}
   - component: {fileID: 5731089695359280883}
-  - component: {fileID: 7085655258471289910}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19835,6 +19834,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4950850119852111104}
   - {fileID: 3054942120376258708}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19977,29 +19977,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.7}
   m_Size: {x: 0.65999997, y: 1.36}
   m_Direction: 0
---- !u!114 &7085655258471289910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3054942120541986084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666546bd026b3eb438fbcfdc4e86583e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  attackAction: {fileID: -2854101731810138056, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
-  moveAction: {fileID: 2389716264467252443, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
-  range: 2
-  hittableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  referenceCollider: {fileID: 0}
-  sprite: {fileID: 3054942120714206837}
-  facingTransform: {fileID: 0}
-  flipXFacesLeft: 1
-  attackOriginOffset: {x: 0.6, y: 0.9}
 --- !u!1 &3054942120628204824
 GameObject:
   m_ObjectHideFlags: 0
@@ -20009,7 +19986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3054942120628204831}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20053,7 +20030,7 @@ GameObject:
   - component: {fileID: 3054942120714206839}
   - component: {fileID: 3054942120714206837}
   - component: {fileID: 3054942120714206838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20166,7 +20143,7 @@ GameObject:
   - component: {fileID: 3054942120786680126}
   - component: {fileID: 3054942120786680124}
   - component: {fileID: 3054942120786680125}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Dash Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25002,7 +24979,7 @@ GameObject:
   - component: {fileID: 3054942121060292282}
   - component: {fileID: 3054942121060292280}
   - component: {fileID: 3054942121060292281}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Launch Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29896,7 +29873,7 @@ GameObject:
   - component: {fileID: 3054942121100908043}
   - component: {fileID: 3054942121100908041}
   - component: {fileID: 3054942121100908042}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Land Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34789,7 +34766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3054942121443606467}
   - component: {fileID: 3054942121443606466}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TrailRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34941,7 +34918,7 @@ GameObject:
   - component: {fileID: 5950687494216429981}
   - component: {fileID: 8608196701999558830}
   - component: {fileID: 2955949689605178864}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Roll Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39766,6 +39743,60 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &3648613659852666777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4462949560789234290}
+  - component: {fileID: 8396598909429619726}
+  m_Layer: 3
+  m_Name: HitboxGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4462949560789234290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648613659852666777}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4950850119852111104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8396598909429619726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648613659852666777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7f5e2e0ca165c409642e33a04004c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMeleeHitbox
+  attackAction: {fileID: -2854101731810138056, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  playerController: {fileID: 0}
+  moveAction: {fileID: 2389716264467252443, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
+  actionsToSuppressWhileCharging: []
+  sprite: {fileID: 3054942120714206837}
+  facingTransform: {fileID: 0}
+  flipXFacesLeft: 1
+  weapon: {fileID: 0}
+  referenceCollider: {fileID: 0}
+  drawGizmos: 1
 --- !u!1 &4279591914954755471
 GameObject:
   m_ObjectHideFlags: 0
@@ -39775,7 +39806,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889462166521372650}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39812,7 +39843,7 @@ GameObject:
   - component: {fileID: 1189139862250158106}
   - component: {fileID: 5514338824089710233}
   - component: {fileID: 2951351761483767398}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RollRing Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44705,7 +44736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4932264274632542143}
   - component: {fileID: 5970203659758147100}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WallClimbSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44824,6 +44855,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4701576998407559797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4950850119852111104}
+  m_Layer: 3
+  m_Name: Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4950850119852111104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4701576998407559797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4462949560789234290}
+  m_Father: {fileID: 3054942120541986095}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6704097944291331743
 GameObject:
   m_ObjectHideFlags: 0
@@ -44833,7 +44896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9118969148783212}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Roll Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44867,7 +44930,7 @@ GameObject:
   - component: {fileID: 2237058942330626287}
   - component: {fileID: 8629632398674961167}
   - component: {fileID: 2592551389070341704}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Wall Slide Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49703,7 +49766,7 @@ GameObject:
   - component: {fileID: 5838048002065968684}
   - component: {fileID: 7511545675388811859}
   - component: {fileID: 1807217943602690405}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RollRing Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54597,7 +54660,7 @@ GameObject:
   - component: {fileID: 4465696622027356849}
   - component: {fileID: 2011589623960660248}
   - component: {fileID: 2106612827568267152}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Roll Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

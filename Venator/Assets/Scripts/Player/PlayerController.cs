@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TarodevController
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(CapsuleCollider2D))]
-    public class PlayerController : MonoBehaviour, IPlayerController, IPhysicsObject
+    public class PlayerController : MonoBehaviour, IPlayerController, IPhysicsObject, IInputLockable
     {
         #region References
 
@@ -40,6 +40,7 @@ namespace TarodevController
         public Vector2 Velocity { get; private set; }
         public int WallDirection { get; private set; }
         public bool ClimbingLadder { get; private set; }
+        public bool InputLocked { get; set; }
 
         public void AddFrameForce(Vector2 force, bool resetVelocity = false)
         {
@@ -178,8 +179,26 @@ namespace TarodevController
 
         private void GatherInput()
         {
-            _frameInput = _playerInput.Gather();
+            // Read whatever your Tarodev PlayerInput provides this frame
+            var raw = _playerInput.Gather();
 
+            // If locked (charging), block steering and new actions
+            if (InputLocked)
+            {
+                raw.Move = Vector2.zero;   // no horizontal/vertical control
+                raw.JumpDown = false;      // block starting a jump
+                raw.JumpHeld = false;
+                raw.RollDown = false;      // block starting a roll
+                raw.CrouchDown = false;    // block starting a slide/crouch
+                raw.CrouchHeld = false;    // ignore crouch hold
+                raw.SprintHeld = false;    // no sprint modifier
+                                           // Don't touch velocity here → momentum continues via physics as usual.
+            }
+
+            // Commit the (possibly filtered) input
+            _frameInput = raw;
+
+            // ----- your original logic below stays the same -----
             if (_frameInput.JumpDown)
             {
                 _jumpToConsume = true;
@@ -188,16 +207,15 @@ namespace TarodevController
 
             if (_frameInput.RollDown) _rollToConsume = true;
 
-            // ⬇️ Allow slide whether grounded or airborne (use a lower/own threshold in air)
+            // Allow slide whether grounded or airborne (use a lower/own threshold in air)
             if (_frameInput.CrouchDown && !_rolling && !_isSliding &&
                 Mathf.Abs(_frameInput.Move.x) > 0.1f)
             {
-                float minSpeed = _grounded ? Stats.SlideMinStartSpeed : Stats.AirSlideMinStartSpeed; // add this to PlayerStats
+                float minSpeed = _grounded ? Stats.SlideMinStartSpeed : Stats.AirSlideMinStartSpeed;
                 if (Mathf.Abs(Velocity.x) >= minSpeed) StartSlide();
             }
-
-            /* if (_frameInput.DashDown) _dashToConsume = true; */
         }
+
 
 
         #endregion
