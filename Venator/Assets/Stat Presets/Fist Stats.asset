@@ -17,7 +17,7 @@ MonoBehaviour:
   chargeThreshold: 0.2
   windupLight: 0.07
   windupCharged: 0.12
-  recovery: 0.06
+  recovery: 0.3
   hpDamageLight: 1
   hpDamageCharged: 5
   postureDamageLight: 1

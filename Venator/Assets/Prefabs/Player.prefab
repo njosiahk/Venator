@@ -19763,6 +19763,7 @@ MonoBehaviour:
   _trailRenderer: {fileID: 3054942121443606467}
   _sprite: {fileID: 3054942120714206837}
   _trail: {fileID: 3054942121443606466}
+  _melee: {fileID: 8396598909429619726}
   _jumpParticles: {fileID: 3054942119893454503}
   _launchParticles: {fileID: 3054942121060292280}
   _moveParticles: {fileID: 3054942119837435221}
@@ -19850,7 +19851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89b8855ab650ac489f1f1b5f2a94751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
+  _sprite: {fileID: 3054942120714206837}
   _verticalInputCacheDuration: 0.2
   <Stats>k__BackingField: {fileID: 11400000, guid: 894dfe33661263b42a8e1490d64c0424, type: 2}
   _drawGizmos: 0
@@ -20030,6 +20031,7 @@ GameObject:
   - component: {fileID: 3054942120714206839}
   - component: {fileID: 3054942120714206837}
   - component: {fileID: 3054942120714206838}
+  - component: {fileID: 6795165759659794245}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -20132,6 +20134,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6795165759659794245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054942120714206832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d239272bbd4b26b4ead8e69ad6877693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _playerAnimator: {fileID: 3054942120376258713}
 --- !u!1 &3054942120786680127
 GameObject:
   m_ObjectHideFlags: 0
@@ -39788,14 +39803,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMeleeHitbox
   attackAction: {fileID: -2854101731810138056, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
-  playerController: {fileID: 0}
-  moveAction: {fileID: 2389716264467252443, guid: 5fd318384d8c0064cbe0e9e8278a002d, type: 3}
-  actionsToSuppressWhileCharging: []
   sprite: {fileID: 3054942120714206837}
   facingTransform: {fileID: 0}
   flipXFacesLeft: 1
-  weapon: {fileID: 0}
-  referenceCollider: {fileID: 0}
+  weapon: {fileID: 11400000, guid: 3650bf218fc3ffc4aa0fe29420a77077, type: 2}
+  referenceCollider: {fileID: 537198729}
+  _playerAnimator: {fileID: 3054942120376258713}
+  useAnimationEvent: 1
+  fallbackHitDelayLight: 0.06
+  fallbackHitDelayCharged: 0.1
+  impactEventTimeout: 0.25
+  applyHitOnTimeout: 0
+  playerController: {fileID: 3054942120541986090}
   drawGizmos: 1
 --- !u!1 &4279591914954755471
 GameObject:

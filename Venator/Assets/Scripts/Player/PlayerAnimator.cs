@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +15,9 @@ namespace TarodevController
         [SerializeField] private Transform _trailRenderer;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private TrailRenderer _trail;
-        
-        
+        [SerializeField] private PlayerMeleeHitbox _melee; 
+
+
         [Header("Particles")] [SerializeField] private ParticleSystem _jumpParticles;
         [SerializeField] private ParticleSystem _launchParticles;
         [SerializeField] private ParticleSystem _moveParticles;
@@ -453,6 +454,46 @@ namespace TarodevController
 
         #endregion
 
+        #region Melee
+
+        // Called by PlayerMeleeHitbox on button DOWN
+        public void OnMeleeStartup()
+        {
+            _anim.ResetTrigger(_attackReleaseKey);
+            _anim.SetTrigger(_attackStartKey);     // Any → Attack_Startup
+        }
+
+        // Called by PlayerMeleeHitbox when charge threshold is crossed (true) or on release (false)
+        public void OnMeleeChargingChanged(bool on)
+        {
+            _anim.SetBool(_chargingKey, on);       // Attack_Startup ↔ Charge_Loop
+        }
+
+        // Called by PlayerMeleeHitbox on button UP
+        public void OnMeleeRelease(bool charged, bool perfect)
+        {
+            _anim.SetBool(_chargedKey, charged);   // optional, for VFX layers
+            _anim.SetBool(_perfectKey, perfect);   // optional, for VFX layers
+            _anim.SetTrigger(_attackReleaseKey);   // Startup/Charge_Loop → Attack_Main
+        }
+
+        // Animation Event (on Attack_Main clip) → Function: AnimEvent_MeleeHit
+        public void AnimEvent_MeleeHit()
+        {
+            // apply the hit at the exact impact frame
+            _melee?.Animation_Hit();
+        }
+
+        // (Optional) Called by melee after hits are applied; good place for SFX/slowmo/shake
+        public void OnMeleeAttackPerformed(bool charged, bool perfect, int hitCount)
+        {
+            // TODO: play impact SFX, trigger camera impulse, short hitstop, enable a trail burst, etc.
+            // Example:
+            // PlaySound(_meleeImpactClip, volume: charged ? 0.9f : 0.7f, pitch: perfect ? 1.05f : 1f);
+        }
+
+        #endregion
+
         #region Event Callbacks
 
         private float _flipLockoutTimer = 0f;
@@ -654,11 +695,12 @@ namespace TarodevController
             _source.pitch = pitch;
             _source.PlayOneShot(clip, volume);
         }
-        
+
         #endregion
 
         #region Animation Keys
 
+        // Movement keys
         private static readonly int MoveXKey = Animator.StringToHash("MoveX");
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
         private static readonly int SprintKey = Animator.StringToHash("Sprinting");
@@ -667,8 +709,13 @@ namespace TarodevController
         private static readonly int RollKey = Animator.StringToHash("Rolling");
         private static readonly int SlideKey = Animator.StringToHash("Sliding");
         private static readonly int DoubleJumpKey = Animator.StringToHash("DoubleJump");
-        //private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
-        //private static readonly int JumpKey = Animator.StringToHash("Jump");
+
+        // Melee keys
+        private static readonly int _attackStartKey = Animator.StringToHash("AttackStart");
+        private static readonly int _attackReleaseKey = Animator.StringToHash("AttackRelease");
+        private static readonly int _chargingKey = Animator.StringToHash("Charging");
+        private static readonly int _chargedKey = Animator.StringToHash("Charged");
+        private static readonly int _perfectKey = Animator.StringToHash("Perfect");
 
         #endregion
     }
