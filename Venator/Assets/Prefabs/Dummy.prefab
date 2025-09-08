@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3425730479533048437}
   - component: {fileID: 5456755750300817299}
+  - component: {fileID: 6060470171058872955}
   - component: {fileID: 6135592242692862928}
   - component: {fileID: -886414311572225440}
   m_Layer: 9
@@ -79,11 +80,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0701b6fa558c4d4b81c4886840de324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  maxHealth: 1
-  overkillExcessThreshold: 2
-  overkillEligibleAtOrBelowHP: 1
+  vitals: {fileID: 0}
+  animator: {fileID: 0}
+  hitTrigger: Hit
+  brokenBool: Broken
+  deadBool: Dead
   verboseHitLogs: 1
   verboseDeathLogs: 1
+--- !u!114 &6060470171058872955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2515494753838026740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1eac9cc7681d24aa007c0825f0a6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combat.CombatantVitals
+  receiverType: 1
+  maxHP: 5
+  weakenedHPThreshold: 1
+  maxPosture: 5
+  regenDelay: 2
+  regenRate: 1
+  brokenDuration: 2
+  postBreakRestoreFraction: 0.5
+  overkillExcessThreshold: 5
+  rejectFromLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &6135592242692862928
 Rigidbody2D:
   serializedVersion: 5
