@@ -1,104 +1,134 @@
+using System;
 using UnityEngine;
-using Combat;
 
-public class EnemyCombatant : MonoBehaviour, IHitReceiver
+namespace Combat
 {
-    [Header("Vitals")]
-    [SerializeField] int maxHealth = 1;
-    int health;
-
-    [Header("Overkill Rule")]
-    [Tooltip("Excess damage required (below 0 HP) for Overkill when weakened.")]
-    [SerializeField] int overkillExcessThreshold = 2;
-
-    [Tooltip("If HP before the killing blow is <= this, enemy is 'weakened' for Overkill checks.")]
-    [SerializeField] int overkillEligibleAtOrBelowHP = 1;
-
-    // (Step 5 posture system will set this true when broken)
-    bool postureBroken = false;
-
-    [Header("Debug Logging")]
-    [Tooltip("Log all hits, including non-lethal (HP before/after, source, tags).")]
-    [SerializeField] bool verboseHitLogs = true;
-
-    [Tooltip("Log death summary (kind:id, tags, excess).")]
-    [SerializeField] bool verboseDeathLogs = true;
-
-    public bool IsDead { get; private set; }
-    public DeathRecord LastDeath { get; private set; }
-
-    void Awake() => health = maxHealth;
-
     /// <summary>
-    /// Apply a hit using the shared payload system.
-    /// Logs non-lethal and lethal hits when verboseHitLogs is enabled.
+    /// Thin wrapper around CombatantVitals:
+    /// - Subscribes to Vitals events to drive animations / logs
+    /// - Records DeathRecord (incl. Overkill + excess damage)
+    /// - Backward-compatible ReceiveHit shim (obsolete)
     /// </summary>
-    public bool ReceiveHit(HitPayload p)
+    [DisallowMultipleComponent]
+    public class EnemyCombatant : MonoBehaviour
     {
-        if (IsDead)
+        [Header("References")]
+        [SerializeField] private CombatantVitals vitals;
+        [SerializeField] private Animator animator; // optional, leave null if you don't drive enemy anims yet
+
+        [Header("Animator Parameter Names (optional)")]
+        [SerializeField] private string hitTrigger = "Hit";
+        [SerializeField] private string brokenBool = "Broken";
+        [SerializeField] private string deadBool = "Dead";
+
+        [Header("Debug")]
+        [SerializeField] private bool verboseHitLogs = false;
+        [SerializeField] private bool verboseDeathLogs = true;
+
+        /// <summary>Last lethal hit info, filled on death.</summary>
+        public DeathRecord LastDeath { get; private set; }
+
+        /// <summary>Expose vitals for other systems.</summary>
+        public CombatantVitals Vitals => vitals;
+
+        private void Reset()
         {
-            if (verboseHitLogs)
-                Debug.Log($"{name} ignored hit (already dead) from {p.source.kind}:{p.source.id}");
-            return false;
+            if (!vitals) vitals = GetComponent<CombatantVitals>();
+            if (!animator) animator = GetComponentInChildren<Animator>();
         }
 
-        // Centralized exception rules (e.g., always allow vs enemies by default)
-        if (!DamageRules.IsAllowedFor(ReceiverType.Enemy, transform, ref p))
+        private void Awake()
         {
-            if (verboseHitLogs)
-                Debug.Log($"{name} blocked hit by rules: {p.source.kind}:{p.source.id} (tags={p.tags})");
-            return false;
+            if (!vitals) vitals = GetComponent<CombatantVitals>();
+            if (!vitals)
+            {
+                // Ensure there's always a single IHitReceiver on this object (the Vitals).
+                vitals = gameObject.AddComponent<CombatantVitals>();
+            }
+            if (!animator) animator = GetComponentInChildren<Animator>();
         }
 
-        int hpBefore = health;
-        health -= p.healthDamage;
-
-        // Lethal
-        if (health <= 0)
+        private void OnEnable()
         {
-            int excess = -health;
-            bool weakened = postureBroken || (hpBefore <= overkillEligibleAtOrBelowHP);
-            if (weakened && excess >= overkillExcessThreshold)
-                p.tags |= DamageTags.Overkill; // Overkill = mechanic tag decided by defender
-
-            if (verboseHitLogs)
-                Debug.Log($"{name} LETHAL hit by {p.source.kind}:{p.source.id} (tags={p.tags}) dmg={p.healthDamage}  HP {hpBefore}->0  Excess={excess}");
-
-            RecordDeath(p, excess);
-            Destroy(gameObject); // Step 6 will replace with corpse conversion if Overkill
-            return true;
+            if (vitals == null) return;
+            vitals.Damaged += OnDamaged;
+            vitals.PostureBroken += OnPostureBroken;
+            vitals.PostureRecovered += OnPostureRecovered;
+            vitals.Died += OnDied;
         }
 
-        // Non-lethal
-        if (verboseHitLogs)
-            Debug.Log($"{name} hit by {p.source.kind}:{p.source.id} (tags={p.tags}) dmg={p.healthDamage}  HP {hpBefore}->{health}");
+        private void OnDisable()
+        {
+            if (vitals == null) return;
+            vitals.Damaged -= OnDamaged;
+            vitals.PostureBroken -= OnPostureBroken;
+            vitals.PostureRecovered -= OnPostureRecovered;
+            vitals.Died -= OnDied;
+        }
 
-        // TODO: stagger/FX hooks can go here (kept minimal for performance)
-        return false;
+        // ----------------- Event Handlers -----------------
+
+        private void OnDamaged(HitPayload p)
+        {
+            if (animator && !string.IsNullOrEmpty(hitTrigger))
+                animator.SetTrigger(hitTrigger);
+
+            if (verboseHitLogs)
+                Debug.Log($"{name} took HP:{p.healthDamage} / PO:{p.postureDamage} from {p.source.kind}:{p.source.id} (tags={p.tags})", this);
+        }
+
+        private void OnPostureBroken(HitPayload p)
+        {
+            if (animator && !string.IsNullOrEmpty(brokenBool))
+                animator.SetBool(brokenBool, true);
+        }
+
+        private void OnPostureRecovered()
+        {
+            if (animator && !string.IsNullOrEmpty(brokenBool))
+                animator.SetBool(brokenBool, false);
+        }
+
+        private void OnDied(HitPayload p, bool overkill)
+        {
+            // Record a structured death entry for logging/fear systems
+            LastDeath = new DeathRecord
+            {
+                kind = p.source.kind,
+                id = p.source.id,
+                tags = p.tags | (overkill ? DamageTags.Overkill : DamageTags.None),
+                attacker = p.source.owner,
+                sourceObject = p.source.sourceObject,
+                position = transform.position,
+                time = Time.time,
+                excessDamage = vitals != null ? vitals.LastExcessDamage : 0
+            };
+
+            if (animator && !string.IsNullOrEmpty(deadBool))
+                animator.SetBool(deadBool, true);
+
+            if (verboseDeathLogs)
+                Debug.Log($"{name} died via {LastDeath.kind}:{LastDeath.id} tags={LastDeath.tags} excess={LastDeath.excessDamage}", this);
+
+            // Let external systems (AI, pooling, loot) react here if they want.
+            Died?.Invoke(this);
+        }
+
+        // ----------------- Public Events -----------------
+
+        /// <summary>Raised after vitals report death (good place to disable AI, drop loot, pool).</summary>
+        public event Action<EnemyCombatant> Died;
+
+        // ----------------- Backward-compat Shim -----------------
+
+        /// <summary>
+        /// Obsolete shim so old code calling EnemyCombatant.ReceiveHit(...) still works.
+        /// Prefer: GetComponent&lt;CombatantVitals&gt;().ReceiveHit(payload)
+        /// </summary>
+        [Obsolete("Use CombatantVitals (IHitReceiver) instead. This forwards to vitals.")]
+        public bool ReceiveHit(HitPayload payload)
+        {
+            return vitals != null && vitals.ReceiveHit(payload);
+        }
     }
-
-    void RecordDeath(in HitPayload killingBlow, int excess)
-    {
-        IsDead = true;
-        LastDeath = new DeathRecord
-        {
-            kind = killingBlow.source.kind,
-            id = killingBlow.source.id,
-            tags = killingBlow.tags,
-            attacker = killingBlow.source.owner,
-            sourceObject = killingBlow.source.sourceObject,
-            position = transform.position,
-            time = Time.time,
-            excessDamage = excess
-        };
-
-        if (verboseDeathLogs)
-            Debug.Log($"{name} died via {LastDeath.kind}:{LastDeath.id} Tags={LastDeath.tags} Excess={excess}");
-    }
-}
-
-/* Shared receiver interface so player/enemy use the same API. */
-public interface IHitReceiver
-{
-    bool ReceiveHit(Combat.HitPayload payload);
 }
